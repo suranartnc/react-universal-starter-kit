@@ -8,6 +8,7 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: [
+    'react-hot-loader/patch',
     `webpack-dev-server/client?http://${config.host}:${config.wdsPort}`,
     'webpack/hot/only-dev-server',
     path.join(__dirname, 'src/shared/theme/styles/app.scss'),
@@ -26,7 +27,11 @@ module.exports = {
       {
         test: /\.js?$/,
         exclude: /node_modules|\.git/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        query: {
+          babelrc: false,
+          presets: ["es2015", "react", "stage-0"]
+        }
       }, {
         test: /\.css$/,
         loaders: [

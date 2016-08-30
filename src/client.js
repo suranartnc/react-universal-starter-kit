@@ -1,22 +1,30 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
-import useScroll from 'react-router-scroll/lib/useScroll';
-
-import { Provider } from 'react-redux';
-
+import { browserHistory } from 'react-router';
+import { AppContainer } from 'react-hot-loader';
 import createStore from 'shared/store/createStore';
-import routes from 'shared/routes';
+import Root from 'shared/Root';
 
 const initialState = window.__INITIAL_STATE__
-const store = createStore(initialState);
+const store = createStore(browserHistory, initialState);
+const mountNode = document.getElementById('root');
 
 render(
-  <Provider store={store}>
-    <Router 
-      history={browserHistory}
-      routes={routes}
-      render={applyRouterMiddleware(useScroll())} />
-  </Provider>,
-  document.getElementById('root')
+	<AppContainer>
+	  <Root store={store} />
+  </AppContainer>,
+  mountNode
 );
+
+if (module.hot) {
+  module.hot.accept('shared/Root', () => {
+    const NextRootApp = require('shared/Root').default;
+
+    render(
+      <AppContainer>
+        <NextRootApp store={store} />
+      </AppContainer>,
+      mountNode
+    );
+  });
+}
