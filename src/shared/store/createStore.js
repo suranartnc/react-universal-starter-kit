@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose  } from 'redux';
 
 import apiMiddleware from 'shared/middlewares/apiMiddleware';
 import { routerMiddleware } from 'react-router-redux';
@@ -11,7 +11,11 @@ export default (history, initialState) => {
     routerMiddleware(history)
   ];
 
-  const enhancer = applyMiddleware(...middlewares);
+  let enhancer = applyMiddleware(...middlewares);
+
+  if (process.env.BROWSER && process.env.NODE_ENV === 'development' && window.devToolsExtension) {
+    enhancer = compose(enhancer, window.devToolsExtension());
+  }
 
   const store = createStore(
     rootReducer,
@@ -21,10 +25,9 @@ export default (history, initialState) => {
 
   if (module.hot) {
     module.hot.accept('shared/reducer', () => {
-      System.import('shared/reducer').then(nextRootReducer =>
-        store.replaceReducer(nextRootReducer.default)
-      )
-    })
+      const nextReducer = require('shared/reducer').default;
+      store.replaceReducer(nextReducer);
+    });
   }
 
   return store;
