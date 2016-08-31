@@ -33,7 +33,14 @@ module.exports = {
       {
         test: /\.js?$/,
         exclude: /node_modules|\.git/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        query: {
+          presets: [
+            ["es2015", { module: false, loose: true }],
+            "react",
+            "stage-0"
+          ]
+        }
       }, {
         test: /\.css$/,
         exclude: /node_modules/,
