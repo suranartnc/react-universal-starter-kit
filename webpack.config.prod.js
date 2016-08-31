@@ -97,9 +97,7 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
-      children: true,
-      minChunks: 2,
-      async: true,
+      minChunks: Infinity
     })
   ],
 
