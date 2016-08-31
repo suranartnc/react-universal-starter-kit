@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 
 var config = require('./src/shared/configs');
 
@@ -19,7 +20,7 @@ module.exports = {
     path: path.join(__dirname, "static", "build"),
     publicPath: `http://${config.host}:${config.wdsPort}/build/`,
     filename: '[name].js',
-    chunkFilename: "[name].js"
+    chunkFilename: "[name].chunk.js"
   },
 
   module: {
@@ -92,7 +93,9 @@ module.exports = {
     })
   ],
 
-  postcss: [],
+  postcss: [
+    autoprefixer({ browsers: ['last 2 versions', 'IE > 10'] })
+  ],
 
   sassLoader: {
     includePaths: [path.join(__dirname, "src/shared/theme/styles")]

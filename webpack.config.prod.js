@@ -22,10 +22,10 @@ module.exports = {
   },
 
   output: {
-    path: path.join(__dirname, "static", "build", "[hash]"),
-    publicPath: "/build/[hash]/",
+    path: path.join(__dirname, "static", "build"),
+    publicPath: "/build/",
     filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].js'
+    chunkFilename: '[name].[chunkhash].chunk.js'
   },
 
   module: {
@@ -79,6 +79,7 @@ module.exports = {
         'BROWSER': JSON.stringify(true)
       }
     }),
+    new webpack.optimize.OccurrenceOrderPlugin(true),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
@@ -91,14 +92,14 @@ module.exports = {
       prettyPrint: true
     }),
     new ExtractTextPlugin({ 
-      filename: '[name].[chunkhash].css',
+      filename: '[name].[contenthash].css',
       allChunks: true
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
-      minChunks: Infinity,
-      path: path.join(__dirname, "static", "build", "vendors"),
-      filename: "[name].[hash].js",
+      children: true,
+      minChunks: 2,
+      async: true,
     })
   ],
 
