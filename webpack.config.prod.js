@@ -35,8 +35,9 @@ module.exports = {
         exclude: /node_modules|\.git/,
         loader: 'babel-loader',
         query: {
+          babelrc: false,
           presets: [
-            ["es2015", { module: false, loose: true }],
+            ["es2015", { "modules": false, loose: true }],
             "react",
             "stage-0"
           ]
