@@ -12,16 +12,4 @@ require('babel-register')({
   ]
 });
 
-// require('babel-register')({
-//  "plugins": [
-//    [
-//     "babel-plugin-webpack-loaders",
-//     {
-//       "config": "./webpack.config.babel.js",
-//       "verbose": false
-//      }
-//    ]
-//  ]
-// });
-
 require('./src/server');
