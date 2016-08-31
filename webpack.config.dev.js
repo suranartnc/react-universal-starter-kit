@@ -28,11 +28,7 @@ module.exports = {
       {
         test: /\.js?$/,
         exclude: /node_modules|\.git/,
-        loader: 'babel-loader',
-        query: {
-          babelrc: false,
-          presets: ["es2015", "react", "stage-0"]
-        }
+        loader: 'babel-loader'
       }, {
         test: /\.css$/,
         loaders: [
