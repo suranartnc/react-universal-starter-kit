@@ -9,13 +9,17 @@ module.exports = {
   entry: {
     app: [
       path.join(__dirname, 'src/shared/theme/styles/app.scss'),
-      path.join(__dirname, 'src/client.js')
+      path.join(__dirname, 'src/client/client.prod.js')
     ],
     vendor: [
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router',
+      "es6-promise",
+      "isomorphic-fetch",
+      "react",
+      "react-dom",
+      "react-helmet",
+      "react-redux",
+      "react-router",
+      "react-router-redux",
       "react-router-scroll",
       "redux"
     ]
