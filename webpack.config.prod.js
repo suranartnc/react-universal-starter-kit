@@ -44,6 +44,12 @@ module.exports = {
             ["es2015", { "modules": false, loose: true }],
             "react",
             "stage-0"
+          ],
+          plugins: [
+            "lodash", 
+            "transform-react-constant-elements",
+            "transform-react-remove-prop-types", 
+            "transform-react-pure-class-to-function"
           ]
         }
       }, {
