@@ -2,12 +2,29 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from 'shared/containers/App/App';
-import HomePage from 'shared/containers/HomePage/HomePage';
-import EntryPage from 'shared/containers/EntryPage/EntryPage';
+
+if (typeof require.ensure !== 'function') {
+  require.ensure = function requireModule(deps, callback) {
+    callback(require);
+  };
+}
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={HomePage} />
-    <Route path="post/:id" component={EntryPage} />
+    <IndexRoute
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('shared/containers/HomePage/HomePage').default);
+        }, 'home');
+      }}
+    />
+    <Route
+      path="post/:id"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('shared/containers/EntryPage/EntryPage').default);
+        }, 'entry');
+      }}
+    />
   </Route>
-);
+)

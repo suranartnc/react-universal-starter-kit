@@ -5,12 +5,13 @@ import useScroll from 'react-router-scroll/lib/useScroll';
 import { syncHistoryWithStore } from 'react-router-redux';
 import routes from 'shared/routes';
 
-const Root = ({ store }) => {
+const Root = ({ store, ...renderProps }) => {
   const history = syncHistoryWithStore(browserHistory, store);  
 
   return (
     <Provider store={store} key="provider">
       <Router 
+        {...renderProps}
         history={history}
         routes={routes}
         render={applyRouterMiddleware(useScroll())} />
