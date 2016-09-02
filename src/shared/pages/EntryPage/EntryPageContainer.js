@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 
 import * as postActions from 'shared/modules/post/postActions';
 
-import PostContent from './PostContent/PostContent';
+import EntryPage from './EntryPage';
 
-class EntryPage extends Component {
+class EntryPageContainer extends Component {
 
   static prefetchData = [
     (params) => postActions.getPostById(params.id)
@@ -18,16 +17,8 @@ class EntryPage extends Component {
   }
 
   render() {
-    const { post } = this.props;
     return (
-      <div className="container">
-        <Helmet title={post.title} />
-        <div className="row">
-          <div className="col-sm-12">
-            <PostContent post={post} />
-          </div>
-        </div>
-      </div>
+      <EntryPage post={this.props.post} />
     );
   }
 }
@@ -38,7 +29,7 @@ function mapStateToProps({ post }) {
   }
 }
 
-EntryPage.propTypes = {
+EntryPageContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
@@ -50,4 +41,4 @@ EntryPage.propTypes = {
   }).isRequired
 }
 
-export default connect(mapStateToProps)(EntryPage);
+export default connect(mapStateToProps)(EntryPageContainer);

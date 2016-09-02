@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
-import styles from './PostContent.scss'
+import styles from './EntryContent.scss'
 
-const PostContent = ({post}) => {
+const EntryContent = ({post}) => {
   return (
     <article className={styles['article']}>
       <footer className={styles['meta']}>
@@ -21,7 +21,7 @@ const PostContent = ({post}) => {
   )
 }
 
-PostContent.propTypes = {
+EntryContent.propTypes = {
   post: PropTypes.shape({
     title: PropTypes.string,
     body: PropTypes.string,
@@ -31,4 +31,4 @@ PostContent.propTypes = {
   })
 }
 
-export default PostContent
+export default EntryContent

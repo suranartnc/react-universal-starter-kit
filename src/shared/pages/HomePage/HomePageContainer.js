@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 
 import * as postActions from 'shared/modules/post/postActions';
 
-import Post from 'shared/components/Post/Post';
+import HomePage from './HomePage';
 
-class HomePage extends Component {
+class HomePageContainer extends Component {
 
   static prefetchData = [
     () => postActions.getPostLatest()
@@ -17,18 +17,8 @@ class HomePage extends Component {
   }
 
   render() {
-    const { posts } = this.props
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8">
-            {posts.map((post, index) => {
-              return <Post key={post.id} post={post} />;
-            })}
-          </div>
-          <div className="col-md-4"></div>
-        </div>
-      </div>
+      <HomePage posts={this.props.posts} />
     );
   }
 }
@@ -39,7 +29,7 @@ function mapStateToProps({ post }) {
   }
 }
 
-HomePage.propTypes = {
+HomePageContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   posts: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -49,4 +39,4 @@ HomePage.propTypes = {
   })).isRequired
 }
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(HomePageContainer);

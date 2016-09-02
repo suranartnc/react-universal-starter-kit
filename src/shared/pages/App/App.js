@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Helmet title="ReactJS Bangkok - Universal Web Apps" />
+        <Helmet title="React Universal Starter Kit" />
         <Header />
         { this.props.children }
       </div>
