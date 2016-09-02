@@ -3,6 +3,8 @@ import config from 'shared/configs';
 require('es6-promise').polyfill();
 import 'isomorphic-fetch';
 
+import { normalize } from 'normalizr'
+
 export const apiURL = `http://${config.host}${config.host === 'localhost' ? ':' + config.port : ''}/api`;
 
 function callApi(url, options) {
@@ -24,7 +26,7 @@ function callApi(url, options) {
 
 export default store => next => action => {
 
-  const { type, request, callback, ...rest } = action;
+  const { type, request, callback, schema, ...rest } = action;
   if (!request) return next(action);
 
   const { path, options = {} } = request;
@@ -52,10 +54,14 @@ export default store => next => action => {
   return callApi(`${apiURL}${path}`, options)
     .then(
       data => {
+        let response = data
+        if (schema != undefined) {
+          response = normalize(data, schema)
+        }
         let result = next({
           ...rest,
           type: DONE,
-          data
+          response
         });
         if (typeof callback === 'function') {
           return callback(data, store.dispatch);
