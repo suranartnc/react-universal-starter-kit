@@ -4,16 +4,19 @@ import Helmet from 'react-helmet'
 import EntryContent from './EntryContent/EntryContent';
 
 const EntryPage = ({ post }) => {
-  return (
-    <div className="container">
-      <Helmet title={post.title} />
-      <div className="row">
-        <div className="col-sm-12">
-          <EntryContent post={post} />
+  if (post !== null) {
+    return (
+      <div className="container">
+        <Helmet title={post.title} />
+        <div className="row">
+          <div className="col-sm-12">
+            <EntryContent post={post} />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+  return null;
 }
 
 EntryPage.propTypes = {
@@ -21,7 +24,7 @@ EntryPage.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     body: PropTypes.string
-  }).isRequired
+  })
 }
 
 export default EntryPage;

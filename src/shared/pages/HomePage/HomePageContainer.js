@@ -12,26 +12,36 @@ class HomePageContainer extends Component {
   ]
 
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(postActions.getPostLatest())
+    const { dispatch, postsInHomepage } = this.props
+    if (postsInHomepage.length === 0) {
+      dispatch(postActions.getPostLatest())
+    }
   }
 
   render() {
     return (
-      <HomePage posts={this.props.posts} />
+      <HomePage posts={this.props.postsInHomepage} />
     );
   }
 }
 
-function mapStateToProps({ post }) {
+function mapStateToProps(state) {
+
+  const {
+    pages: { home },
+    entities: { posts }
+  } = state
+
+  const postsInHomepage = home.map(id => posts[id])
+
   return {
-    posts: post.latest
+    postsInHomepage
   }
 }
 
 HomePageContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  posts: PropTypes.arrayOf(PropTypes.shape({
+  postsInHomepage: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,

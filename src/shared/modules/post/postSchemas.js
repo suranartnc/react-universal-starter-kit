@@ -1,7 +1,12 @@
-import { Schema } from 'normalizr';
+import { Schema, arrayOf } from 'normalizr';
 
 const postSchema = new Schema('posts', {
   idAttribute: 'id'
 });
 
-export { postSchema };
+const postArraySchema = arrayOf(postSchema)
+
+export { 
+  postSchema,
+  postArraySchema
+};

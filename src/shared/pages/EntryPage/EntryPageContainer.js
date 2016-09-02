@@ -11,11 +11,6 @@ class EntryPageContainer extends Component {
     (params) => postActions.getPostById(params.id)
   ]
 
-  componentDidMount() {
-    const { dispatch, params: { id } } = this.props
-    dispatch(postActions.getPostById(id));
-  }
-
   render() {
     return (
       <EntryPage post={this.props.post} />
@@ -23,9 +18,17 @@ class EntryPageContainer extends Component {
   }
 }
 
-function mapStateToProps({ post }) {
+function mapStateToProps(state, props) {
+
+  const {
+    entities: { posts }
+  } = state
+
+  const id = props.params.id
+  const post = posts[id]
+
   return {
-    post: post.active
+    post
   }
 }
 
@@ -38,7 +41,7 @@ EntryPageContainer.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     body: PropTypes.string
-  }).isRequired
+  })
 }
 
 export default connect(mapStateToProps)(EntryPageContainer);
