@@ -79,6 +79,7 @@
     "json-loader": "^0.5.4",
     "json-server": "^0.8.16",
     "node-sass": "^3.8.0",
+    "normalizr": "^2.2.1",
     "npm-run-all": "^2.3.0",
     "postcss-loader": "^0.10.1",
     "react": "^15.2.1",
