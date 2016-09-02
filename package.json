@@ -11,7 +11,8 @@
     "build": "better-npm-run build",
     "start": "npm-run-all --parallel start-ssr start-api",
     "start-ssr": "better-npm-run start",
-    "start-api": "node ./api/server.js"
+    "start-api": "node ./api/server.js",
+    "lint": "eslint src/*"
   },
   "betterScripts": {
     "dev": {
@@ -95,6 +96,13 @@
     "webpack": "^2.1.0-beta.20"
   },
   "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.3.1",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-import-resolver-webpack": "^0.5.1",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.1.2",
     "nodemon": "^1.10.0",
     "react-hot-loader": "^3.0.0-beta.2",
     "webpack-dev-server": "^2.1.0-beta.0"
