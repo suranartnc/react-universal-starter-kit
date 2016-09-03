@@ -1,4 +1,6 @@
-import * as actionTypes from './actionTypes';
+export const POST_GET_LATEST = 'POST_GET_LATEST';
+export const POST_GET_BY_ID = 'POST_GET_BY_ID';
+
 import { 
   postSchema,
   postArraySchema
@@ -6,7 +8,7 @@ import {
 
 export function getPostLatest(limit = 20) {
   return {
-    type: actionTypes.POST_GET_LATEST,
+    type: POST_GET_LATEST,
     request: {
       path: `/posts?_limit=${limit}`
     },
@@ -16,7 +18,7 @@ export function getPostLatest(limit = 20) {
 
 export function getPostById(id) {
   return {
-    type: actionTypes.POST_GET_BY_ID,
+    type: POST_GET_BY_ID,
     request: {
       path: `/posts/${id}`
     },

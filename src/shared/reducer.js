@@ -1,7 +1,7 @@
+import _ from 'lodash'
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import _ from 'lodash'
-import * as postActions from 'shared/modules/post/actionTypes'
+import { POST_GET_LATEST } from 'shared/modules/post/postActions'
 
 const initialEntities = {
   posts: {}
@@ -18,7 +18,7 @@ function entities(state = initialEntities, action) {
 
 function homePageReducer(state = emptyList, action) {
   switch(action.type) {
-    case postActions.POST_GET_LATEST:
+    case POST_GET_LATEST:
       if (action.response && action.response.result) {
         return action.response.result
       }
