@@ -5,8 +5,13 @@ import styles from './Header.scss';
 const Header = () => (
   <header className={styles['header']}>
     <div className="container">
-      <div className={styles['logo']}>
-        <Link to="/">React Universal Starter Kit</Link>
+      <div className={styles['bar']}>
+        <div className={styles['logo']}>
+          <Link to="/">React Universal Starter Kit</Link>
+        </div>
+        <div className={styles['write']}>
+          <Link to="/write">Write a story</Link>
+        </div>
       </div>
       <nav className={styles['nav']}>
         <ul>

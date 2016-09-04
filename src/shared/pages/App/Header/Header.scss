@@ -3,10 +3,22 @@
   margin-bottom: 40px;
 }
 
+.bar {
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo {
   font-size: 1.4em;
   font-weight: bold;
   padding: 15px 0px 15px 0px;
+}
+
+.write {
+  align-self: center;
+  a {
+    color: #00ab6b;
+  }
 }
 
 .nav {
