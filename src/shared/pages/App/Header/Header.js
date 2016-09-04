@@ -6,7 +6,7 @@ const Header = () => (
   <header className={styles['header']}>
     <div className="container">
       <div className={styles['logo']}>
-        <Link to="/">ReactJS Bangkok 1.0.0</Link>
+        <Link to="/">React Universal Starter Kit</Link>
       </div>
       <nav className={styles['nav']}>
         <ul>

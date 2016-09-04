@@ -18,7 +18,7 @@ const renderPage = (reactComponents, initialState) => (`
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>ReactJS Bangkok - Universal Web Apps</title>
+      <title>React Universal Starter Kit</title>
       ${process.env.NODE_ENV === 'production' ? '<link rel="stylesheet" href="' + assetsManifest.app.css + '" />' : ''}
     </head>
     <body>
