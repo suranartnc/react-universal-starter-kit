@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import * as postActions from 'shared/modules/post/postActions';
+import { getPostById } from 'shared/modules/post/postActions';
+import { selectPostInEntryPage } from 'shared/modules/post/postSelectors'
 
 import EntryPage from './EntryPage';
 
 class EntryPageContainer extends Component {
 
   static prefetchData = [
-    (params) => postActions.getPostById(params.id)
+    (params) => getPostById(params.id)
   ]
 
   render() {
@@ -19,16 +20,8 @@ class EntryPageContainer extends Component {
 }
 
 function mapStateToProps(state, props) {
-
-  const {
-    entities: { posts }
-  } = state
-
-  const id = props.params.id
-  const post = posts[id]
-
   return {
-    post
+    post: selectPostInEntryPage(state, props)
   }
 }
 

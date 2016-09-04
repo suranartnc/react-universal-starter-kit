@@ -1,20 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import * as postActions from 'shared/modules/post/postActions';
+import { getPostLatest } from 'shared/modules/post/postActions';
+import { selectPostsInHomePage } from 'shared/modules/post/postSelectors'
 
 import HomePage from './HomePage';
 
 class HomePageContainer extends Component {
 
   static prefetchData = [
-    () => postActions.getPostLatest()
+    () => getPostLatest()
   ]
 
   componentDidMount() {
     const { dispatch, postsInHomepage } = this.props
     if (postsInHomepage.length === 0) {
-      dispatch(postActions.getPostLatest())
+      dispatch(getPostLatest())
     }
   }
 
@@ -26,16 +27,8 @@ class HomePageContainer extends Component {
 }
 
 function mapStateToProps(state) {
-
-  const {
-    pages: { home },
-    entities: { posts }
-  } = state
-
-  const postsInHomepage = home.map(id => posts[id])
-
   return {
-    postsInHomepage
+    postsInHomepage: selectPostsInHomePage(state)
   }
 }
 

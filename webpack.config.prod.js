@@ -21,7 +21,8 @@ module.exports = {
       "react-router",
       "react-router-redux",
       "react-router-scroll",
-      "redux"
+      "redux",
+      "reselect"
     ]
   },
 
