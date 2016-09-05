@@ -6,7 +6,15 @@ if (process.env.BROWSER === true) {
 
 const WritePage = (props) => {
   if (WriteEditor) {
-    return <WriteEditor />
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <WriteEditor />
+          </div>
+        </div>
+      </div>
+    )
   }
   return null
 }

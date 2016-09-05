@@ -1,28 +1,44 @@
 import React, { Component, PropTypes } from 'react'
 
-import RichTextEditor from 'react-rte'
+import {Editor, EditorState, ContentState, RichUtils} from 'draft-js';
+import {stateToHTML} from 'draft-js-export-html';
 
 class WriteEditor extends Component {
 
   state = {
-    value: RichTextEditor.createEmptyValue()
+    editorState: EditorState.createEmpty()
   }
 
-  onChange = (value) => {
-    this.setState({value});
-    if (this.props.onChange) {
-      this.props.onChange(
-        value.toString('html')
-      );
-    }
-  };
+  onChange = (editorState) => {
+    this.setState({
+      editorState
+    })
+  }
+
+  onBoldClick = () => {
+    this.onChange(RichUtils.toggleInlineStyle(
+      this.state.editorState,
+      'BOLD'
+    ));
+  }
+
+  onSave = () => {
+    let html = stateToHTML(this.state.editorState.getCurrentContent());
+    console.log(html)
+  }
 
   render() {
+    const {editorState} = this.state;
     return (
-      <RichTextEditor
-        value={this.state.value}
-        onChange={this.onChange}
-      />
+      <div>
+        <button onClick={this.onBoldClick}>Bold</button>
+        <div className="editor">
+          <Editor
+            editorState={editorState}
+            onChange={this.onChange} />
+        </div>
+        <button onClick={this.onSave}>Save</button>
+      </div>   
     )
   }
 }
