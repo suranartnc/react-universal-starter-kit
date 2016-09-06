@@ -23,8 +23,17 @@ class WriteEditor extends Component {
   }
 
   onSave = () => {
-    let html = stateToHTML(this.state.editorState.getCurrentContent());
-    console.log(html)
+    let html = stateToHTML(this.state.editorState.getCurrentContent())
+    const data = {
+      title: 'Title',
+      excerpt: 'Excerpt',
+      body: html,
+      name: 'Name',
+      avatar: '',
+      tags: ['Tag 1', 'Tag 2'],
+      pubDate: ''
+    }
+    this.props.onFormSubmit(data)
   }
 
   render() {

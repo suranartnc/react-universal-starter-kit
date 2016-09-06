@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { POST_GET_LATEST } from 'shared/modules/post/postActions'
+import { POST_GET_LATEST, POST_CREATE } from 'shared/modules/post/postActions'
 
 const emptyList = []
 
@@ -21,6 +21,11 @@ function pageReducer(state = initialState, action) {
   switch(action.type) {
     case POST_GET_LATEST:
       return updatePageState('home', state, action)
+    case POST_CREATE:
+      return {
+        ...state,
+        home: [action.response.result].concat(state.home)
+      }
     default:
       return state
   }

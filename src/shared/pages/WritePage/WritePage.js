@@ -10,7 +10,7 @@ const WritePage = (props) => {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <WriteEditor />
+            <WriteEditor onFormSubmit={props.onFormSubmit} />
           </div>
         </div>
       </div>
