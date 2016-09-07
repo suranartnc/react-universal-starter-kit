@@ -2,6 +2,10 @@ const path = require('path')
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
+  // entry: [
+  //   path.join(__dirname, '../src/shared/theme/styles/app.scss'),
+  // ],
+
   module: {
     loaders: [
       {
@@ -13,6 +17,10 @@ module.exports = {
           'postcss-loader',
         ],
         include: path.resolve(__dirname, '../'),
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader',
       },
     ],
   },
