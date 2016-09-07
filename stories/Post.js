@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import faker from 'faker'
 import Post from 'shared/components/Post/Post'
+import CenterDecorator from '../.storybook/decorators/CenterDecorator'
 
 const post = {
   id: 1,
@@ -15,6 +16,7 @@ const post = {
 }
 
 storiesOf('Post', module)
+  .addDecorator(CenterDecorator)
   .add('default', () => (
     <Post post={post} />
   ))
