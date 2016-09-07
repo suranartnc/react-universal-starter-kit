@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import faker from 'faker'
 import Post from 'shared/components/Post/Post'
-import CenterDecorator from '../.storybook/decorators/CenterDecorator'
+import CenterDecorator from './decorators/CenterDecorator'
 
 const post = {
   id: 1,
