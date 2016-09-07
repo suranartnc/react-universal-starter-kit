@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import faker from 'faker'
 import HomePage from 'shared/pages/HomePage/HomePage'
+import App from 'shared/pages/App/App'
 
 const posts = [];
 for (let i = 0; i < 5; ++i) {
@@ -18,6 +19,9 @@ for (let i = 0; i < 5; ++i) {
 }
 
 storiesOf('Home Page', module)
+  .addDecorator((story) => (
+    <App children={story()} />
+  ))
   .add('default', () => (
     <HomePage posts={posts} />
   ))
