@@ -11,7 +11,8 @@
     "build": "better-npm-run build",
     "start": "npm-run-all --parallel start-ssr start-api",
     "start-ssr": "better-npm-run start",
-    "start-api": "node ./api/server.js"
+    "start-api": "node ./api/server.js",
+    "storybook": "start-storybook -p 9002 -c .storybook"
   },
   "betterScripts": {
     "dev": {
@@ -99,6 +100,7 @@
     "webpack": "^2.1.0-beta.20"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.11.0",
     "nodemon": "^1.10.0",
     "react-hot-loader": "^3.0.0-beta.2",
     "webpack-dev-server": "^2.1.0-beta.0"
