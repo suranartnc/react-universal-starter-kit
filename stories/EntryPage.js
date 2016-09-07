@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import faker from 'faker'
+import EntryPage from 'shared/pages/EntryPage/EntryPage'
 import EntryContent from 'shared/pages/EntryPage/EntryContent/EntryContent'
 
 const post = {
@@ -11,7 +12,10 @@ const post = {
   pubDate: '2 hours ago',
 }
 
-storiesOf('EntryContent', module)
+storiesOf('Entry Page', module)
   .add('default', () => (
+    <EntryPage post={post} />
+  ))
+  .add('only EntryContent component', () => (
     <EntryContent post={post} />
   ))
