@@ -8,8 +8,6 @@ export const AUTH_INITIALIZATION_DONE = 'AUTH_INITIALIZATION_DONE'
 export const AUTH_LOGGED_IN_SUCCESS = 'AUTH_LOGGED_IN_SUCCESS'
 export const AUTH_LOGGED_OUT_SUCCESS = 'AUTH_LOGGED_OUT_SUCCESS'
 
-firebaseApi.initAuth()
-
 function extractUserProperties(firebaseUser) {
   const user = {};
   const userProperties = [
@@ -92,7 +90,6 @@ export function authLoggedIn(userUID) {
     firebaseApi.GetChildAddedByKeyOnce('/users', userUID)
       .then(user => {
         dispatch(userLoadedSuccess(user.val()));
-        dispatch(push('/'));
       })
       .catch(error => {
         console.log(error)

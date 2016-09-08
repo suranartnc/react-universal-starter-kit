@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import { connect } from 'react-redux'
-import { attemptLogin, attemptLogout } from 'shared/modules/user/userActions'
+import { authInitialized, attemptLogin, attemptLogout } from 'shared/modules/user/userActions'
+import firebaseApi from 'shared/utils/firebase'
 
 class Account extends Component {
   
@@ -12,6 +13,16 @@ class Account extends Component {
 
   onLogoutButtonClick = () => {
     this.props.dispatch(attemptLogout())
+  }
+
+  componentDidMount() {
+    firebaseApi.initAuth()
+      .then((user) => {
+        this.props.dispatch(authInitialized(user))
+      })
+      .catch((error) => {
+        console.error('error while initializing Firebase Auth', error);
+      });
   }
 
   render() {
