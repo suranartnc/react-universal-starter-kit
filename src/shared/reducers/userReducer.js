@@ -10,16 +10,23 @@ const initialState = {
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
+
     case USER_LOADED_SUCCESS:
-      return Object.assign({}, state, action.user);
+      return {
+        ...state,
+        ...action.user
+      }
 
     case USER_IS_ADMIN_SUCCESS:
-      return Object.assign({}, state, {isAdmin: true});
+      return {
+        ...state,
+        isAdmin: true
+      }
 
     case AUTH_LOGGED_OUT_SUCCESS:
       return initialState;
 
     default:
-      return state;
+      return state
   }
 }
