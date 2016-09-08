@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import styles from './Header.scss';
 
-const Header = () => (
+const Header = (props) => (
   <header className={styles['header']}>
     <div className="container">
       <div className={styles['bar']}>
@@ -11,6 +11,7 @@ const Header = () => (
         </div>
         <div className={styles['write']}>
           <Link to="/write">Write a story</Link>
+          <a onClick={props.onLoginButtonClicked}>Login</a>
         </div>
       </div>
       <nav className={styles['nav']}>
