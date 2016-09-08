@@ -12,28 +12,13 @@ firebaseApi.initAuth()
 
 export function attemptLogin() {
   return (dispatch) => {
-
-    dispatch({
-      type: 'USER_LOGIN_REQUEST',
-    });
-
     const provider = new firebase.auth.FacebookAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
         console.log('login success', result)
-        dispatch({
-          type: 'USER_LOGIN',
-          user: {
-            profile: result.user,
-            token: result.credential.accessToken
-          }
-        });
+        dispatch(userCreated(result.user));
       }).catch(function(error) {
         console.log('login failed', error)
-        dispatch({
-          type: 'USER_LOGIN_FAIL',
-          error
-        });
       })
   };
 }
@@ -69,6 +54,13 @@ export function userLoadedSuccess(user) {
   return {
     type: USER_LOADED_SUCCESS, 
     user: extractUserProperties(user)
+  };
+}
+
+export function authLoggedInSuccess(userUID) {
+  return {
+    type: AUTH_LOGGED_IN_SUCCESS, 
+    userUID
   };
 }
 
