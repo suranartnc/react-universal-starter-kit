@@ -2,14 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import Header from './Header/Header';
 
-import { connect } from 'react-redux'
-import { attemptLogin } from 'shared/modules/user/userActions'
-
 class App extends Component {
-
-  logUserIn = () => {
-    this.props.dispatch(attemptLogin())
-  }
 
   render() {
     return (
@@ -23,14 +16,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.node,
-  dispatch: PropTypes.func.isRequired
+  children: PropTypes.node
 };
 
-function mapStateToProps() {
-  return {
-
-  }
-}
-
-export default connect(mapStateToProps)(App)
+export default App

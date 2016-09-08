@@ -37,7 +37,6 @@ export function attemptLogin() {
     const provider = new firebase.auth.FacebookAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        console.log('login success', result)
         dispatch(userCreated(result.user));
       }).catch(function(error) {
         console.log('login failed', error)
@@ -57,6 +56,36 @@ export function userCreated(user) {
   }
 }
 
+export function userLoadedSuccess(user) {
+  return {
+    type: USER_LOADED_SUCCESS, 
+    user: extractUserProperties(user)
+  };
+}
+
+export function userIsAdminSuccess() {
+  return {
+    type: USER_IS_ADMIN_SUCCESS
+  };
+}
+
+export function authInitialized(user) {
+  return (dispatch) => {
+    dispatch(authInitializedDone());
+    if (user) {
+      dispatch(authLoggedIn(user.uid));
+    } else {
+      dispatch(authLoggedOutSuccess());
+    }
+  };
+}
+
+export function authInitializedDone() {
+  return {
+    type: AUTH_INITIALIZATION_DONE
+  };
+}
+
 export function authLoggedIn(userUID) {
   return (dispatch) => {
     dispatch(authLoggedInSuccess(userUID));
@@ -71,16 +100,22 @@ export function authLoggedIn(userUID) {
   };
 }
 
-export function userLoadedSuccess(user) {
-  return {
-    type: USER_LOADED_SUCCESS, 
-    user: extractUserProperties(user)
-  };
-}
-
 export function authLoggedInSuccess(userUID) {
   return {
     type: AUTH_LOGGED_IN_SUCCESS, 
     userUID
   };
+}
+
+export function attemptLogout() {
+  return (dispatch) => {
+    dispatch(authLoggedOutSuccess())
+    dispatch(push('/'));
+  }
+}
+
+export function authLoggedOutSuccess() {
+  return {
+    type: AUTH_LOGGED_OUT_SUCCESS
+  }
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import styles from './Header.scss';
 
+import Account from './Account/Account'
+
 const Header = (props) => (
   <header className={styles['header']}>
     <div className="container">
@@ -11,7 +13,7 @@ const Header = (props) => (
         </div>
         <div className={styles['write']}>
           <Link to="/write">Write a story</Link>
-          <a onClick={props.onLoginButtonClicked}>Login</a>
+          <Account />
         </div>
       </div>
       <nav className={styles['nav']}>
