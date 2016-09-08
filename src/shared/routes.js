@@ -19,6 +19,14 @@ export default (
       }}
     />
     <Route
+      path="write"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('shared/pages/WritePage/WritePageContainer').default);
+        }, 'write');
+      }}
+    />
+    <Route
       path="post/:id"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
