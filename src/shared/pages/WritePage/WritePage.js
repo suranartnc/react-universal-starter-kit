@@ -52,7 +52,7 @@ const WritePage = (props) => {
       <div className="row">
         <div className="col-md-12">
           <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Field type="input" name="title" label="Title" component={renderInput} />
+            <Field type="text" name="title" label="Title" component={renderInput} />
             <Field name="body" label="Body" component={renderEditor} rows="15" />
             <button type="submit" className="btn btn-default btn-block btn-lg" disabled={pristine || submitting}>Post</button>
           </form>
