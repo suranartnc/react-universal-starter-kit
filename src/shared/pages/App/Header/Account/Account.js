@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import { connect } from 'react-redux'
-import { authInitialized, attemptLogin, attemptLogout } from 'shared/modules/user/userActions'
+import { authInitialized, attemptLogin, signOut } from 'shared/modules/user/userActions'
 import firebaseApi from 'shared/utils/firebase'
 
 class Account extends Component {
@@ -12,7 +12,7 @@ class Account extends Component {
   }
 
   onLogoutButtonClick = () => {
-    this.props.dispatch(attemptLogout())
+    this.props.dispatch(signOut())
   }
 
   componentDidMount() {

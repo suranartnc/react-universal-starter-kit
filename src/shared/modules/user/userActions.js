@@ -104,11 +104,17 @@ export function authLoggedInSuccess(userUID) {
   };
 }
 
-export function attemptLogout() {
-  return (dispatch) => {
-    dispatch(authLoggedOutSuccess())
-    dispatch(push('/'));
-  }
+export function signOut() {
+  return (dispatch, getState) => {
+    return firebaseApi.authSignOut()
+      .then(() => {
+        dispatch(authLoggedOutSuccess())
+        dispatch(push('/'))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  };
 }
 
 export function authLoggedOutSuccess() {
