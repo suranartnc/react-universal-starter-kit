@@ -15,31 +15,35 @@ import {
 
 export function getPostLatest(limit = 20) {
   return (dispatch) => {
-    firebase.database().ref('/posts/').orderByKey().once('value')
-      .then((snapshot) => {
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('/posts/').orderByKey().once('value')
+        .then((snapshot) => {
 
-        const result = []
-        snapshot.forEach(function(childSnapshot) {
-          result.push(childSnapshot.key)
-        })
+          const result = []
+          snapshot.forEach(function(childSnapshot) {
+            result.push(childSnapshot.key)
+          })
 
-        let response = null
-        if (snapshot.val() !== null) {
-          response = {
-            entities: {
-              posts: snapshot.val()
-            },
-            result
+          let response = null
+          if (snapshot.val() !== null) {
+            response = {
+              entities: {
+                posts: snapshot.val()
+              },
+              result
+            }
           }
-        }
-        dispatch({
-          type: POST_GET_LATEST,
-          response
+          dispatch({
+            type: POST_GET_LATEST,
+            response
+          })
+          resolve(response)
         })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+          reject(error)
+        })
+    })
   }  
 }
 
@@ -75,7 +79,6 @@ export function createNewPost(data) {
     firebase.database().ref().update(updates)
       .then(() => {
         const response = normalize(data, postSchema)
-        console.log(response)
         dispatch(createNewPostInStore(response))
       })
       .catch((error) => {

@@ -27,7 +27,6 @@ class HomePageContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     postsInHomepage: selectPostsInHomePage(state)
   }
