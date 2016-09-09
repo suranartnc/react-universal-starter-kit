@@ -44,7 +44,11 @@ export default function(req, res) {
     location: req.url,
     routes
   }, (error, redirectLocation, renderProps) => {
-    if (renderProps) {
+    if (error) {
+      res.status(500).send(error.message);
+    } else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    } else if (renderProps && renderProps.components) {
       prefetchData(store.dispatch, renderProps.components, renderProps.params)
         .then(() => {
           const initialState = store.getState()        
@@ -55,8 +59,8 @@ export default function(req, res) {
           );
           res.end(renderPage(reactComponents, initialState));
         })
-      } else {
-        res.status(400).end('Not Found')
-      }
+    } else {
+      res.status(404).send('Not found');
+    }
   })
 }

@@ -10,10 +10,13 @@ if (typeof require.ensure !== 'function') {
 }
 
 export default function getRoutes(store) {
-  const checkAuth = (nextState, replace, callback) => {
-    console.log(store.getState())
-    // store.dispatch(requireAuth(nextState, replace, callback));
-  };
+
+  const checkAuth = (nextState, replace) => {
+    if (!store.getState().auth.isLogged) {
+      replace('/')
+    }
+  }
+
   return (
     <Route path="/" component={App}>
       <IndexRoute
@@ -24,8 +27,8 @@ export default function getRoutes(store) {
         }}
       />
       <Route
-        path="write"
         onEnter={checkAuth}
+        path="write"
         getComponent={(nextState, cb) => {
           require.ensure([], require => {
             cb(null, require('shared/pages/WritePage/WritePageContainer').default);
