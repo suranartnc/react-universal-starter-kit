@@ -12,7 +12,6 @@ const Header = (props) => (
           <Link to="/">React Universal Starter Kit</Link>
         </div>
         <div className={styles['write']}>
-          <Link to="/write">Write a story</Link>
           <Account />
         </div>
       </div>

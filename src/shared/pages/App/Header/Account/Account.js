@@ -30,17 +30,18 @@ class Account extends Component {
     if (auth.isLogged) {
       return (
         <div>
+          <Link to="/write">Write a story</Link>
           <div>
             <img src={user.photoURL} />
             <p>{user.displayName}</p>
-            <a onClick={this.onLogoutButtonClick}>Logout</a>
+            <a href="#" onClick={this.onLogoutButtonClick}>Logout</a>
           </div>
         </div>
       )
     }
     return (
       <div>
-        <a onClick={this.onLoginButtonClick}>Login</a>
+        <a href="#" onClick={this.onLoginButtonClick}>Login</a>
       </div>
     )
   }
