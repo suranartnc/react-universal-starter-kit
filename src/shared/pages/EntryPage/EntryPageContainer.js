@@ -31,7 +31,7 @@ EntryPageContainer.propTypes = {
     id: PropTypes.string.isRequired
   }),
   post: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     title: PropTypes.string,
     body: PropTypes.string
   })

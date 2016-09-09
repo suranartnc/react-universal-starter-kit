@@ -6,9 +6,16 @@ import createStore from 'shared/store/createStore'
 import getRoutes from 'shared/routes'
 import prefetchData from './prefetchData'
 
-import config from '../../src/shared/configs';
-const wdsPath = `http://${config.host}:${config.wdsPort}/build/`;
-const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
+import config from '../../src/shared/configs'
+
+import firebase from 'firebase';
+import firebaseApi from 'shared/utils/firebase'
+import firebaseConfig from 'shared/configs/firebase'
+
+firebase.initializeApp(firebaseConfig)
+
+const wdsPath = `http://${config.host}:${config.wdsPort}/build/`
+const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets)
 
 const renderPage = (reactComponents, initialState) => (`
   <!DOCTYPE html>
