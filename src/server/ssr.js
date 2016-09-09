@@ -3,10 +3,8 @@ import { renderToString } from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
 import { Provider } from 'react-redux'
 import createStore from 'shared/store/createStore'
-import routes from 'shared/routes'
+import getRoutes from 'shared/routes'
 import prefetchData from './prefetchData'
-
-
 
 import config from '../../src/shared/configs';
 const wdsPath = `http://${config.host}:${config.wdsPort}/build/`;
@@ -40,43 +38,25 @@ const renderPage = (reactComponents, initialState) => (`
 export default function(req, res) {
 
   const store = createStore()
+  const routes = getRoutes(store)
 
   match({
     location: req.url,
     routes
   }, (error, redirectLocation, renderProps) => {
-
-    prefetchData(store.dispatch, renderProps.components, renderProps.params)
-      .then(() => {
-
-        const initialState = store.getState()        
-
-        const reactComponents = renderToString(
-          <Provider store={store}>
-            <RouterContext {...renderProps} />
-          </Provider>
-        );
-
-        res.end(renderPage(reactComponents, initialState));
-      })
-
-
-    
-
-
-
-
-
-
+    if (renderProps) {
+      prefetchData(store.dispatch, renderProps.components, renderProps.params)
+        .then(() => {
+          const initialState = store.getState()        
+          const reactComponents = renderToString(
+            <Provider store={store}>
+              <RouterContext {...renderProps} />
+            </Provider>
+          );
+          res.end(renderPage(reactComponents, initialState));
+        })
+      } else {
+        res.status(400).end('Not Found')
+      }
   })
-  
 }
-
-
-
-
-
-
-
-
-
