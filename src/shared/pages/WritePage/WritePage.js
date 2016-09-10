@@ -20,7 +20,7 @@ const renderLabel = (htmlFor, label) => <label className="sr-only" htmlFor={html
 
 const renderError = (touched, error) => {
   if (touched && error) {
-    return <span className="help-block text-danger">{error}</span>
+    return <span className="text-danger">{error}</span>
   }
 
   return null

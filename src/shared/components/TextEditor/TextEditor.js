@@ -48,8 +48,8 @@ class TextEditor extends Component {
     const { editorState } = this.state
 
     return (
-      <div onClick={this.focus}>
-        <div>
+      <div>
+        <div className="btn-toolbar" role="toolbar">
           <InlineStyleControls
             editorState={editorState}
             onToggle={this.toggleInlineStyle} />

@@ -15,7 +15,7 @@ const BlockStyleControls = ({ editorState, onToggle }) => {
     .getType()
 
   return (
-    <div>
+    <div className="btn-group" role="group">
       {BLOCK_TYPES.map(({ label, style }) => (
         <StyleButton key={label}
           active={style === blockType}

@@ -10,7 +10,7 @@ const InlineStyleControls = ({ editorState, onToggle }) => {
   const currentStyle = editorState.getCurrentInlineStyle()
 
   return (
-    <div>
+    <div className="btn-group" role="group">
       {INLINE_STYLES.map(({ label, style}) => (
         <StyleButton key={label}
           active={currentStyle.has(style)}
