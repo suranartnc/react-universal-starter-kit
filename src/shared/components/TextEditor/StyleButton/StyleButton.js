@@ -10,7 +10,7 @@ class StyleButton extends Component {
     const className = this.props.active ? 'stylebutton--active' : 'stylebutton'
 
     return (
-      <button className={className} onMouseDown={this.onToggle}>
+      <button type="button" className={className} onMouseDown={this.onToggle}>
         {this.props.label}
       </button>
     )

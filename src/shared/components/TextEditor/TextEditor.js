@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Editor, EditorState, RichUtils } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import InlineStyleControls from './InlineStyleControls/InlineStyleControls'
+import BlockStyleControls from './BlockStyleControls/BlockStyleControls'
 
 const INLINE_STYLES = [
   {label: 'B', style: 'BOLD'},
@@ -38,16 +39,27 @@ class TextEditor extends Component {
     this.onChange(newState)
   }
 
+  toggleBlockType = (blockType) => {
+    const newState = RichUtils.toggleBlockType(this.state.editorState, blockType)
+    this.onChange(newState)
+  }
+
   render() {
+    const { editorState } = this.state
+
     return (
       <div>
         <div>
           <InlineStyleControls
-            editorState={this.state.editorState}
+            editorState={editorState}
             onToggle={this.toggleInlineStyle} />
+
+          <BlockStyleControls
+            editorState={editorState}
+            onToggle={this.toggleBlockType} />
         </div>
 
-        <Editor editorState={this.state.editorState}
+        <Editor className="form-control" editorState={editorState}
           onChange={this.onChange}
           handleKeyCommand={this.handleKeyCommand} />
       </div>
