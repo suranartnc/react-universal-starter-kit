@@ -14,6 +14,8 @@ module.exports = {
     vendor: [
       "es6-promise",
       "isomorphic-fetch",
+      "firebase",
+      "normalizr",
       "react",
       "react-dom",
       "react-helmet",
@@ -22,6 +24,7 @@ module.exports = {
       "react-router-redux",
       "react-router-scroll",
       "redux",
+      "redux-thunk",
       "reselect"
     ]
   },
