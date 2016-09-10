@@ -21,10 +21,10 @@ class TextEditor extends Component {
 
     if (newState) {
       this.onChange(newState)
-      return 'handled'
+      return true
     }
 
-    return 'not-handled'
+    return false
   }
 
   render() {
