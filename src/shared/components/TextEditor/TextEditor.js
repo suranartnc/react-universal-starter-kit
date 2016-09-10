@@ -14,6 +14,10 @@ class TextEditor extends Component {
     editorState: EditorState.createEmpty()
   }
 
+  focus = () => {
+    this.refs.editor.focus()
+  }
+
   onChange = (editorState) => {
     this.setState({
       editorState
@@ -48,7 +52,7 @@ class TextEditor extends Component {
     const { editorState } = this.state
 
     return (
-      <div>
+      <div onClick={this.focus}>
         <div>
           <InlineStyleControls
             editorState={editorState}
@@ -59,7 +63,8 @@ class TextEditor extends Component {
             onToggle={this.toggleBlockType} />
         </div>
 
-        <Editor className="form-control" editorState={editorState}
+        <Editor ref="editor"
+          editorState={editorState}
           onChange={this.onChange}
           handleKeyCommand={this.handleKeyCommand} />
       </div>
