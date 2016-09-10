@@ -1,6 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { Editor, EditorState, RichUtils } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
+import InlineStyleControls from './InlineStyleControls/InlineStyleControls'
+
+const INLINE_STYLES = [
+  {label: 'B', style: 'BOLD'},
+  {label: 'I', style: 'ITALIC'},
+]
 
 class TextEditor extends Component {
   state = {
@@ -27,11 +33,24 @@ class TextEditor extends Component {
     return false
   }
 
+  toggleInlineStyle = (inlineStyle) => {
+    const newState = RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
+    this.onChange(newState)
+  }
+
   render() {
     return (
-      <Editor editorState={this.state.editorState}
-        onChange={this.onChange}
-        handleKeyCommand={this.handleKeyCommand} />
+      <div>
+        <div>
+          <InlineStyleControls
+            editorState={this.state.editorState}
+            onToggle={this.toggleInlineStyle} />
+        </div>
+
+        <Editor editorState={this.state.editorState}
+          onChange={this.onChange}
+          handleKeyCommand={this.handleKeyCommand} />
+      </div>
     )
   }
 }
