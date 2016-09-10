@@ -32,7 +32,7 @@ function normalize(snapshot, schema) {
 }
 
 class firebaseApi {
-  
+
   static get({ path }) {
     return firebase
       .database()
@@ -41,11 +41,11 @@ class firebaseApi {
       .once('value')
   }
 
-  static update({ data }) {
+  static update({ updates }) {
     return firebase
       .database()
       .ref()
-      .update(data)
+      .update(updates)
   }
 }
 
@@ -69,7 +69,18 @@ export default (store) => (next) => (action) => {
     .then((snapshot) => {
       let response = null
       if (options.schema) {
-        response = normalize(snapshot, options.schema)
+        if (method === 'update') {
+          response = {
+            entities: {
+              [options.schema.entities]: {
+                [options.data.id]: options.data
+              }
+            },
+            result: options.data.id
+          }
+        } else {
+          response = normalize(snapshot, options.schema)
+        }
       }
       return next({
         ...rest,

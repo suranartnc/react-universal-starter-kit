@@ -44,13 +44,6 @@ export function getPostById(id) {
   }
 }
 
-export function createNewPostInStore(response) {
-  return {
-    type: POST_CREATE,
-    response
-  };
-}
-
 export function createNewPost(data) {
 
   const uid = firebase.auth().currentUser.uid
@@ -68,29 +61,12 @@ export function createNewPost(data) {
     database: {
       method: 'update',
       options: {
-        data
+        data,
+        updates,
+        schema: {
+          entities: 'posts'
+        }
       }
     }
-  }
-
-  return (dispatch) => {
-    // const uid = firebase.auth().currentUser.uid
-    // const newPostKey = firebase.database().ref().child('posts').push().key;
-
-    // data.id = newPostKey
-    // data.uid = uid
-
-    // const updates = {};
-    // updates['/posts/' + newPostKey] = data;
-    // updates['/user-posts/' + uid + '/' + newPostKey] = data;
-
-    firebase.database().ref().update(updates)
-      .then(() => {
-        const response = normalize(data, postSchema)
-        dispatch(createNewPostInStore(response))
-      })
-      .catch((error) => {
-        console.log(error)
-      })
   }
 }
