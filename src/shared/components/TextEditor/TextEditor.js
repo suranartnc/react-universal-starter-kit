@@ -3,11 +3,7 @@ import { Editor, EditorState, RichUtils } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import InlineStyleControls from './InlineStyleControls/InlineStyleControls'
 import BlockStyleControls from './BlockStyleControls/BlockStyleControls'
-
-const INLINE_STYLES = [
-  {label: 'B', style: 'BOLD'},
-  {label: 'I', style: 'ITALIC'},
-]
+import styles from './TextEditor.scss'
 
 class TextEditor extends Component {
   state = {
@@ -21,6 +17,11 @@ class TextEditor extends Component {
 
     const html = stateToHTML(editorState.getCurrentContent())
     this.props.onChange(html)
+  }
+
+  onFocus = (e) => {
+    this.refs.editor.focus()
+    this.props.onFocus(e)
   }
 
   handleKeyCommand = (command) => {
@@ -45,6 +46,8 @@ class TextEditor extends Component {
   }
 
   render() {
+    console.log(styles)
+
     const { editorState } = this.state
 
     return (
@@ -59,12 +62,14 @@ class TextEditor extends Component {
             onToggle={this.toggleBlockType} />
         </div>
 
-        <Editor ref="editor"
-          editorState={editorState}
-          onChange={this.onChange}
-          onFocus={this.props.onFocus}
-          onBlur={this.props.onBlur}
-          handleKeyCommand={this.handleKeyCommand} />
+        <div className={styles.editor} onClick={this.onFocus}>
+          <Editor ref="editor"
+            editorState={editorState}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.props.onBlur}
+            handleKeyCommand={this.handleKeyCommand} />
+        </div>
       </div>
     )
   }
