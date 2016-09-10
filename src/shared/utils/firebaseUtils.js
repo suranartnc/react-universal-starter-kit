@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase'
 
 export class FirebaseAPI {
 
@@ -10,11 +10,27 @@ export class FirebaseAPI {
       .once('value')
   }
 
+  static set({ path, value }) {
+    return firebase
+      .database()
+      .ref(path)
+      .set(value)
+  }
+
   static update({ updates }) {
     return firebase
       .database()
       .ref()
       .update(updates)
+  }
+
+  static GetChildAddedByKeyOnce({ path, key }) {
+    return firebase
+      .database()
+      .ref(path)
+      .orderByKey()
+      .equalTo(key)
+      .once('child_added');
   }
 
   static createNewKey(entity) {
@@ -28,6 +44,27 @@ export class FirebaseAPI {
 
   static getCurrentUserID() {
     return firebase.auth().currentUser.uid
+  }
+
+  static initAuth() {
+    return new Promise((resolve, reject) => {
+      const unsub = firebase.auth().onAuthStateChanged(
+        user => {
+          unsub();
+          resolve(user);
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  static signInWithPopup() {
+    const provider = new firebase.auth.FacebookAuthProvider()
+    return firebase.auth().signInWithPopup(provider)
+  }
+
+  static signOut() {
+    return firebase.auth().signOut()
   }
 }
 
@@ -59,4 +96,26 @@ export function normalize(snapshot, schema) {
     response.result = result
   }
   return response
+}
+
+export function extractUserProperties(firebaseUser) {
+  const user = {};
+  const userProperties = [
+    'displayName',
+    'email',
+    'emailVerified',
+    'isAnonymous',
+    'photoURL',
+    'providerData',
+    'providerId',
+    'refreshToken',
+    'uid',
+    'isAdmin'
+  ];
+  userProperties.map((prop) => {
+    if (prop in firebaseUser) {
+      user[prop] = firebaseUser[prop];
+    }
+  });
+  return user;
 }

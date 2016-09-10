@@ -1,5 +1,4 @@
-import firebase from 'firebase'
-import firebaseApi from 'shared/utils/firebase'
+import { FirebaseAPI, extractUserProperties } from 'shared/utils/firebaseUtils'
 import { push } from 'react-router-redux';
 
 export const USER_LOADED_SUCCESS = 'USER_LOADED_SUCCESS'
@@ -8,32 +7,9 @@ export const AUTH_INITIALIZATION_DONE = 'AUTH_INITIALIZATION_DONE'
 export const AUTH_LOGGED_IN_SUCCESS = 'AUTH_LOGGED_IN_SUCCESS'
 export const AUTH_LOGGED_OUT_SUCCESS = 'AUTH_LOGGED_OUT_SUCCESS'
 
-function extractUserProperties(firebaseUser) {
-  const user = {};
-  const userProperties = [
-    'displayName',
-    'email',
-    'emailVerified',
-    'isAnonymous',
-    'photoURL',
-    'providerData',
-    'providerId',
-    'refreshToken',
-    'uid',
-    'isAdmin'
-  ];
-  userProperties.map((prop) => {
-    if (prop in firebaseUser) {
-      user[prop] = firebaseUser[prop];
-    }
-  });
-  return user;
-}
-
 export function attemptLogin() {
   return (dispatch) => {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+    FirebaseAPI.signInWithPopup()
       .then((result) => {
         dispatch(userCreated(result.user));
       }).catch(function(error) {
@@ -44,7 +20,11 @@ export function attemptLogin() {
 
 export function userCreated(user) {
   return (dispatch) => {
-    firebaseApi.databaseSet('/users/' + user.uid, extractUserProperties(user))
+    const options = { 
+      path: '/users/' + user.uid, 
+      value: extractUserProperties(user)
+    }
+    FirebaseAPI.set(options)
       .then(() => {
         dispatch(authLoggedIn(user.uid))
       })
@@ -87,7 +67,11 @@ export function authInitializedDone() {
 export function authLoggedIn(userUID) {
   return (dispatch) => {
     dispatch(authLoggedInSuccess(userUID));
-    firebaseApi.GetChildAddedByKeyOnce('/users', userUID)
+    const options = {
+      path: '/users',
+      key: userUID
+    }
+    FirebaseAPI.GetChildAddedByKeyOnce(options)
       .then(user => {
         dispatch(userLoadedSuccess(user.val()));
       })
@@ -106,7 +90,7 @@ export function authLoggedInSuccess(userUID) {
 
 export function signOut() {
   return (dispatch, getState) => {
-    return firebaseApi.authSignOut()
+    return FirebaseAPI.signOut()
       .then(() => {
         dispatch(authLoggedOutSuccess())
         dispatch(push('/'))
