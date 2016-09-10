@@ -14,10 +14,6 @@ class TextEditor extends Component {
     editorState: EditorState.createEmpty()
   }
 
-  focus = () => {
-    this.refs.editor.focus()
-  }
-
   onChange = (editorState) => {
     this.setState({
       editorState
@@ -66,6 +62,8 @@ class TextEditor extends Component {
         <Editor ref="editor"
           editorState={editorState}
           onChange={this.onChange}
+          onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
           handleKeyCommand={this.handleKeyCommand} />
       </div>
     )
