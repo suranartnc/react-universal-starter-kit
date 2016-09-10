@@ -6,7 +6,7 @@ export class FirebaseAPI {
     return firebase
       .database()
       .ref(path)
-      .orderByKey()
+      .orderByChild('pubDate')
       .once('value')
   }
 
