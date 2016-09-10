@@ -4,13 +4,19 @@ import { connect } from 'react-redux'
 import { createNewPost } from 'shared/modules/post/postActions'
 import WritePage from './WritePage'
 
+import _ from 'lodash'
 import faker from 'faker'
 
 class WritePageContainer extends Component {
 
   onFormSubmit = (data) => {
+    let excerpt = data.body.replace(/<(?:.|\n)*?>/gm, '') // TODO: find better way to strip html tags
+    excerpt = _.truncate(excerpt, {
+      length: 30
+    })
+
     // mock missing post data
-    data.excerpt = `${data.body.substring(0, 20)}...`
+    data.excerpt = excerpt
     data.name = `${faker.name.firstName()} ${faker.name.lastName()}`
     data.avatar = faker.image.avatar()
     data.tags = data.title.split(' ')

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form'
+import TextEditor from 'shared/components/TextEditor/TextEditor'
 
-// if (process.env.BROWSER === true) {
-//   var WriteEditor = require('./WriteEditor').default;
-// }
 function validate(values) {
   const errors = {}
 
@@ -22,7 +20,7 @@ const renderLabel = (htmlFor, label) => <label className="sr-only" htmlFor={html
 
 const renderError = (touched, error) => {
   if (touched && error) {
-    return <span className="help-block text-danger">{error}</span>
+    return <span className="text-danger">{error}</span>
   }
 
   return null
@@ -36,10 +34,10 @@ const renderInput = ({ input, type, label, meta: { touched, error } }) => (
   </div>
 )
 
-const renderEditor = ({ input, label, rows, meta: { touched, error } }) => (
+const renderEditor = ({ input, label, meta: { touched, error } }) => (
   <div className="form-group">
     {renderLabel(input.name, label)}
-    <textarea {...input} className="form-control" placeholder={label} rows={rows} />
+    <TextEditor {...input} label={label} />
     {renderError(touched, error)}
   </div>
 )
@@ -53,7 +51,7 @@ const WritePage = (props) => {
         <div className="col-md-12">
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <Field type="text" name="title" label="Title" component={renderInput} />
-            <Field name="body" label="Body" component={renderEditor} rows="15" />
+            <Field name="body" label="Body" component={renderEditor} />
             <button type="submit" className="btn btn-default btn-block btn-lg" disabled={pristine || submitting}>Post</button>
           </form>
         </div>
