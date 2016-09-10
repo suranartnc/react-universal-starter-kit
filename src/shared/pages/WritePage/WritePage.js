@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form'
-import WriteEditor from './WriteEditor'
+import TextEditor from 'shared/components/TextEditor/TextEditor'
 
 function validate(values) {
   const errors = {}
@@ -37,7 +37,7 @@ const renderInput = ({ input, type, label, meta: { touched, error } }) => (
 const renderEditor = ({ input, label, meta: { touched, error } }) => (
   <div className="form-group">
     {renderLabel(input.name, label)}
-    <WriteEditor {...input} label={label} />
+    <TextEditor {...input} label={label} />
     {renderError(touched, error)}
   </div>
 )

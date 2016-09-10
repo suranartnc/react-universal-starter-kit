@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Editor, EditorState, RichUtils } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 
-class WriteEditor extends Component {
+class TextEditor extends Component {
   state = {
     editorState: EditorState.createEmpty()
   }
@@ -36,8 +36,8 @@ class WriteEditor extends Component {
   }
 }
 
-WriteEditor.propTypes = {
+TextEditor.propTypes = {
   onChange: PropTypes.func.isRequired
 }
 
-export default WriteEditor
+export default TextEditor
