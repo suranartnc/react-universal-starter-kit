@@ -6,7 +6,7 @@ var config = require('./src/shared/configs');
 
 module.exports = {
 
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
 
   entry: [
     'react-hot-loader/patch',

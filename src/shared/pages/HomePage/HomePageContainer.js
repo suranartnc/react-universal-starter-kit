@@ -35,7 +35,7 @@ function mapStateToProps(state) {
 HomePageContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   postsInHomepage: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     tags: PropTypes.array

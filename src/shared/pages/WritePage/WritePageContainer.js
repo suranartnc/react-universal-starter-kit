@@ -20,7 +20,7 @@ class WritePageContainer extends Component {
     data.name = `${faker.name.firstName()} ${faker.name.lastName()}`
     data.avatar = faker.image.avatar()
     data.tags = data.title.split(' ')
-    data.pubDate = 'now'
+    data.pubDate = -(new Date).getTime()
 
     this.props.dispatch(createNewPost(data))
     this.context.router.push('/')

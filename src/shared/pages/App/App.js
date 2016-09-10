@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div>
         <Helmet title="React Universal Starter Kit" />
-        <Header />
+        <Header onLoginButtonClicked={this.logUserIn} />
         { this.props.children }
       </div>
     );
@@ -19,4 +19,4 @@ App.propTypes = {
   children: PropTypes.node
 };
 
-export default App;
+export default App

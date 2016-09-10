@@ -9,30 +9,40 @@ if (typeof require.ensure !== 'function') {
   };
 }
 
-export default (
-  <Route path="/" component={App}>
-    <IndexRoute
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('shared/pages/HomePage/HomePageContainer').default);
-        }, 'home');
-      }}
-    />
-    <Route
-      path="write"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('shared/pages/WritePage/WritePageContainer').default);
-        }, 'write');
-      }}
-    />
-    <Route
-      path="post/:id"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('shared/pages/EntryPage/EntryPageContainer').default);
-        }, 'entry');
-      }}
-    />
-  </Route>
-)
+export default function getRoutes(store) {
+
+  const checkAuth = (nextState, replace) => {
+    if (!store.getState().auth.isLogged) {
+      replace('/')
+    }
+  }
+
+  return (
+    <Route path="/" component={App}>
+      <IndexRoute
+        getComponent={(nextState, cb) => {
+          require.ensure([], require => {
+            cb(null, require('shared/pages/HomePage/HomePageContainer').default);
+          }, 'home');
+        }}
+      />
+      <Route
+        onEnter={checkAuth}
+        path="write"
+        getComponent={(nextState, cb) => {
+          require.ensure([], require => {
+            cb(null, require('shared/pages/WritePage/WritePageContainer').default);
+          }, 'write');
+        }}
+      />
+      <Route
+        path="post/:id"
+        getComponent={(nextState, cb) => {
+          require.ensure([], require => {
+            cb(null, require('shared/pages/EntryPage/EntryPageContainer').default);
+          }, 'entry');
+        }}
+      />
+    </Route>
+  )
+}
