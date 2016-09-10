@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form'
+import WriteEditor from './WriteEditor'
 
-// if (process.env.BROWSER === true) {
-//   var WriteEditor = require('./WriteEditor').default;
-// }
 function validate(values) {
   const errors = {}
 
@@ -36,10 +34,10 @@ const renderInput = ({ input, type, label, meta: { touched, error } }) => (
   </div>
 )
 
-const renderEditor = ({ input, label, rows, meta: { touched, error } }) => (
+const renderEditor = ({ input, label, meta: { touched, error } }) => (
   <div className="form-group">
     {renderLabel(input.name, label)}
-    <textarea {...input} className="form-control" placeholder={label} rows={rows} />
+    <WriteEditor {...input} label={label} />
     {renderError(touched, error)}
   </div>
 )
@@ -53,7 +51,7 @@ const WritePage = (props) => {
         <div className="col-md-12">
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <Field type="text" name="title" label="Title" component={renderInput} />
-            <Field name="body" label="Body" component={renderEditor} rows="15" />
+            <Field name="body" label="Body" component={renderEditor} />
             <button type="submit" className="btn btn-default btn-block btn-lg" disabled={pristine || submitting}>Post</button>
           </form>
         </div>
