@@ -9,7 +9,6 @@ import prefetchData from './prefetchData'
 import config from '../../src/shared/configs'
 
 import firebase from 'firebase';
-import firebaseApi from 'shared/utils/firebase'
 import firebaseConfig from 'shared/configs/firebase'
 
 firebase.initializeApp(firebaseConfig)

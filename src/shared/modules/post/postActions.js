@@ -14,44 +14,37 @@ import {
 } from './postSchemas'
 
 export function getPostLatest(limit = 20) {
-  return (dispatch) => {
-    return firebase.database()
-      .ref('/posts/')
-      .orderByKey()
-      .once('value')
-      .then((snapshot) => {
-        const result = []
-        snapshot.forEach(function(childSnapshot) {
-          result.push(childSnapshot.key)
-        })
-        let response = null
-        if (snapshot.val() !== null) {
-          response = {
-            entities: {
-              posts: snapshot.val()
-            },
-            result
-          }
-        }
-        dispatch({
-          type: POST_GET_LATEST,
-          response
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }  
+  return {
+    type: POST_GET_LATEST,
+    database: {
+      method: 'get',
+      path: '/posts/',
+      schema: {
+        entities: 'posts',
+        type: 'list'
+      }
+    }
+  }
 }
 
 export function getPostById(id) {
+  // return {
+  //   type: POST_GET_BY_ID,
+  //   request: {
+  //     path: `/posts/${id}`
+  //   },
+  //   schema: postSchema
+  // };
   return {
     type: POST_GET_BY_ID,
-    request: {
-      path: `/posts/${id}`
-    },
-    schema: postSchema
-  };
+    database: {
+      method: 'get',
+      path: `/posts/${id}`,
+      schema: {
+        entities: 'posts'
+      }
+    }
+  }
 }
 
 export function createNewPostInStore(response) {

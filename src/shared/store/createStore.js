@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose  } from 'redux';
 
 import thunk from 'redux-thunk';
-import apiMiddleware from 'shared/middlewares/apiMiddleware';
+import firebaseMiddleware from 'shared/middlewares/firebaseMiddleware';
 import { routerMiddleware } from 'react-router-redux';
 import rootReducer from 'shared/reducers/rootReducer';
 
@@ -9,7 +9,7 @@ export default (history, initialState) => {
   
 	const middlewares = [
     thunk,
-    apiMiddleware,
+    firebaseMiddleware,
     routerMiddleware(history)
   ];
 
