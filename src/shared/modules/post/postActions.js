@@ -18,30 +18,27 @@ export function getPostLatest(limit = 20) {
     type: POST_GET_LATEST,
     database: {
       method: 'get',
-      path: '/posts/',
-      schema: {
-        entities: 'posts',
-        type: 'list'
-      }
+      options: {
+        path: '/posts/',
+        schema: {
+          entities: 'posts',
+          type: 'list'
+        }
+      } 
     }
   }
 }
 
 export function getPostById(id) {
-  // return {
-  //   type: POST_GET_BY_ID,
-  //   request: {
-  //     path: `/posts/${id}`
-  //   },
-  //   schema: postSchema
-  // };
   return {
     type: POST_GET_BY_ID,
     database: {
       method: 'get',
-      path: `/posts/${id}`,
-      schema: {
-        entities: 'posts'
+      options: {
+        path: `/posts/${id}`,
+        schema: {
+          entities: 'posts'
+        }
       }
     }
   }
@@ -55,16 +52,37 @@ export function createNewPostInStore(response) {
 }
 
 export function createNewPost(data) {
+
+  const uid = firebase.auth().currentUser.uid
+  const newPostKey = firebase.database().ref().child('posts').push().key;
+
+  data.id = newPostKey
+  data.uid = uid
+
+  const updates = {};
+  updates['/posts/' + newPostKey] = data;
+  updates['/user-posts/' + uid + '/' + newPostKey] = data;
+
+  return {
+    type: POST_CREATE,
+    database: {
+      method: 'update',
+      options: {
+        data
+      }
+    }
+  }
+
   return (dispatch) => {
-    const uid = firebase.auth().currentUser.uid
-    const newPostKey = firebase.database().ref().child('posts').push().key;
+    // const uid = firebase.auth().currentUser.uid
+    // const newPostKey = firebase.database().ref().child('posts').push().key;
 
-    data.id = newPostKey
-    data.uid = uid
+    // data.id = newPostKey
+    // data.uid = uid
 
-    const updates = {};
-    updates['/posts/' + newPostKey] = data;
-    updates['/user-posts/' + uid + '/' + newPostKey] = data;
+    // const updates = {};
+    // updates['/posts/' + newPostKey] = data;
+    // updates['/user-posts/' + uid + '/' + newPostKey] = data;
 
     firebase.database().ref().update(updates)
       .then(() => {
