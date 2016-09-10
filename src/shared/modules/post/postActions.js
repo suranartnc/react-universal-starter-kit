@@ -1,19 +1,15 @@
-import firebase from 'firebase';
-import firebaseApi from 'shared/utils/firebase'
-import firebaseConfig from 'shared/configs/firebase';
-
-import { normalize } from 'normalizr'
+import { FirebaseAPI } from 'shared/utils/firebaseUtils'
 
 export const POST_GET_LATEST = 'POST_GET_LATEST'
 export const POST_GET_BY_ID = 'POST_GET_BY_ID'
 export const POST_CREATE = 'POST_CREATE'
 
-import { 
+import {
   postSchema,
   postArraySchema
 } from './postSchemas'
 
-export function getPostLatest(limit = 20) {
+export function getPostLatest() {
   return {
     type: POST_GET_LATEST,
     database: {
@@ -46,8 +42,8 @@ export function getPostById(id) {
 
 export function createNewPost(data) {
 
-  const uid = firebase.auth().currentUser.uid
-  const newPostKey = firebase.database().ref().child('posts').push().key;
+  const uid = FirebaseAPI.getCurrentUserID()
+  const newPostKey = FirebaseAPI.createNewKey('posts');
 
   data.id = newPostKey
   data.uid = uid

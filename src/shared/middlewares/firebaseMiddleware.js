@@ -1,53 +1,4 @@
-import firebase from 'firebase';
-import firebaseConfig from 'shared/configs/firebase';
-
-function normalize(snapshot, schema) {
-  
-  let response = null
-  let result = []
-
-  if (snapshot.val() !== null) {
-    if (schema.type === 'list') {
-      snapshot.forEach((childSnapshot) => {
-        result.push(childSnapshot.key)
-      })
-      response = {
-        entities: {
-          [schema.entities]: snapshot.val()
-        }
-      }
-    } else {
-      result = snapshot.key
-      response = {
-        entities: {
-          [schema.entities]: {
-            [result]: snapshot.val()
-          }
-        }
-      }
-    }
-    response.result = result
-  }
-  return response
-}
-
-class firebaseApi {
-
-  static get({ path }) {
-    return firebase
-      .database()
-      .ref(path)
-      .orderByKey()
-      .once('value')
-  }
-
-  static update({ updates }) {
-    return firebase
-      .database()
-      .ref()
-      .update(updates)
-  }
-}
+import { FirebaseAPI, normalize } from 'shared/utils/firebaseUtils';
 
 export default (store) => (next) => (action) => {
 
@@ -65,7 +16,7 @@ export default (store) => (next) => (action) => {
 
   next({...rest, type: REQUEST });
 
-  return firebaseApi[method](options)
+  return FirebaseAPI[method](options)
     .then((snapshot) => {
       let response = null
       if (options.schema) {
