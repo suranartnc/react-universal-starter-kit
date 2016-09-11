@@ -16,6 +16,7 @@ export function getPostLatest() {
       method: 'get',
       options: {
         path: '/posts/',
+        sortBy: 'pubDateInverse',
         schema: {
           entities: 'posts',
           type: 'list'

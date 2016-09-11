@@ -2,11 +2,11 @@ import firebase from 'firebase'
 
 export class FirebaseAPI {
 
-  static get({ path }) {
+  static get({ path, sortBy = 'id' }) {
     return firebase
       .database()
       .ref(path)
-      .orderByChild('pubDate')
+      .orderByChild(sortBy)
       .once('value')
   }
 
