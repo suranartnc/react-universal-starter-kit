@@ -31,6 +31,7 @@ class Account extends Component {
     return (
       <div>
         <a href="#" onClick={this.onLoginButtonClick}>Login</a>
+        <a href="/auth/facebook">Login with Facebook</a>
       </div>
     )
   }

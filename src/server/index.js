@@ -4,9 +4,18 @@ import express from 'express';
 import favicon from 'serve-favicon';
 import ssr from './ssr';
 
+import passport from 'passport'
+import passportRouteHandler from 'server/routes/passport'
+import passportGetConfigs from 'server/configs/passport/configurations'
+
+passportGetConfigs(passport)
+
 const app = express();
 app.use(favicon(path.join(process.cwd(), 'static/favicon.ico')));
 app.use(express.static(path.join(process.cwd(), 'static')));
+
+app.use(passport.initialize())
+app.use(passportRouteHandler)
 
 app.use(ssr);
 
