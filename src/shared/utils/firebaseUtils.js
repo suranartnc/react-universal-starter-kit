@@ -2,11 +2,11 @@ import firebase from 'firebase'
 
 export class FirebaseAPI {
 
-  static get({ path }) {
+  static get({ path, sortBy = 'id' }) {
     return firebase
       .database()
       .ref(path)
-      .orderByChild('pubDate')
+      .orderByChild(sortBy)
       .once('value')
   }
 
@@ -22,15 +22,6 @@ export class FirebaseAPI {
       .database()
       .ref()
       .update(updates)
-  }
-
-  static GetChildAddedByKeyOnce({ path, key }) {
-    return firebase
-      .database()
-      .ref(path)
-      .orderByKey()
-      .equalTo(key)
-      .once('child_added');
   }
 
   static createNewKey(entity) {
@@ -58,8 +49,23 @@ export class FirebaseAPI {
     });
   }
 
-  static signInWithPopup() {
-    const provider = new firebase.auth.FacebookAuthProvider()
+  static getAuthProvider(provider) {
+    switch (provider) {
+      case 'facebook':
+        return new firebase.auth.FacebookAuthProvider()
+      case 'twitter':
+        return new firebase.auth.TwitterAuthProvider()
+      case 'google':
+        return new firebase.auth.GoogleAuthProvider()
+      case 'github':
+        return new firebase.auth.GithubAuthProvider()
+      default:
+        return new firebase.auth.FacebookAuthProvider() 
+    }
+  }
+
+  static signInWithPopup(providerName) {
+    const provider = this.getAuthProvider(providerName)
     return firebase.auth().signInWithPopup(provider)
   }
 

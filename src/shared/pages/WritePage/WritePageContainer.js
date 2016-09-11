@@ -16,11 +16,13 @@ class WritePageContainer extends Component {
     })
 
     // mock missing post data
+    const now = (new Date).getTime()
     data.excerpt = excerpt
     data.name = `${faker.name.firstName()} ${faker.name.lastName()}`
     data.avatar = faker.image.avatar()
     data.tags = data.title.split(' ')
-    data.pubDate = -(new Date).getTime()
+    data.pubDate = now
+    data.pubDateInverse = 0 - now
 
     this.props.dispatch(createNewPost(data))
     this.context.router.push('/')

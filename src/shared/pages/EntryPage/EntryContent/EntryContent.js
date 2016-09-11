@@ -12,7 +12,7 @@ const EntryContent = ({post}) => {
         </div>
         <div className={styles['meta_list']}>
           <div className={styles['author']}>{post.name}</div>
-          <div className={styles['date']}>{post.pubDate}</div>
+          <div className={styles['date']}>{post.pubDateReadable}</div>
         </div>
       </footer>
       <h3 className={styles['title']}>{post.title}</h3>
@@ -27,7 +27,7 @@ EntryContent.propTypes = {
     body: PropTypes.string,
     name: PropTypes.string,
     avatar: PropTypes.string,
-    pubDate: PropTypes.string
+    pubDateReadable: PropTypes.string
   })
 }
 

@@ -9,7 +9,7 @@ import Root from 'shared/Root';
 import firebase from 'firebase'
 import firebaseConfig from 'shared/configs/firebase'
 import { FirebaseAPI } from 'shared/utils/firebaseUtils';
-import { authInitialized } from 'shared/modules/user/userActions'
+import { authInitialized } from 'shared/modules/auth/authActions'
 
 firebase.initializeApp(firebaseConfig)
 

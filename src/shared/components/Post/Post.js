@@ -12,7 +12,7 @@ const Post = ({post}) => (
       </div>
       <div className={styles['meta_list']}>
         <div className={styles['author']}>{post.name}</div>
-        <div className={styles['date']}>{post.pubDate}</div>
+        <div className={styles['date']}>{post.pubDateReadable}</div>
       </div>
     </footer>
     <h3 className={styles['title']}><Link to={`/post/${post.id}`}>{post.title}</Link></h3>
@@ -29,7 +29,7 @@ Post.propTypes = {
     name: PropTypes.string.isRequired,
     avatar: PropTypes.string.isRequired,
     tags: PropTypes.array.isRequired,
-    pubDate: PropTypes.string.isRequired
+    pubDateReadable: PropTypes.string.isRequired
   }).isRequired,
 }
 
