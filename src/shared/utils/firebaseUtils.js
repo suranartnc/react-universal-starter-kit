@@ -24,15 +24,6 @@ export class FirebaseAPI {
       .update(updates)
   }
 
-  static GetChildAddedByKeyOnce({ path, key }) {
-    return firebase
-      .database()
-      .ref(path)
-      .orderByKey()
-      .equalTo(key)
-      .once('child_added');
-  }
-
   static createNewKey(entity) {
     return firebase
       .database()
@@ -58,8 +49,23 @@ export class FirebaseAPI {
     });
   }
 
-  static signInWithPopup() {
-    const provider = new firebase.auth.FacebookAuthProvider()
+  static getAuthProvider(provider) {
+    switch (provider) {
+      case 'facebook':
+        return new firebase.auth.FacebookAuthProvider()
+      case 'twitter':
+        return new firebase.auth.TwitterAuthProvider()
+      case 'google':
+        return new firebase.auth.GoogleAuthProvider()
+      case 'github':
+        return new firebase.auth.GithubAuthProvider()
+      default:
+        return new firebase.auth.FacebookAuthProvider() 
+    }
+  }
+
+  static signInWithPopup(providerName) {
+    const provider = this.getAuthProvider(providerName)
     return firebase.auth().signInWithPopup(provider)
   }
 

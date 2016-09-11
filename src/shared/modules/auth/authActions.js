@@ -52,7 +52,7 @@ export function authLogOut() {
 
 export function logIn() {
   return (dispatch) => {
-    FirebaseAPI.signInWithPopup()
+    FirebaseAPI.signInWithPopup('facebook')
       .then((result) => {
         dispatch(createUser(result.user))
         dispatch(authLoad(result.user))
