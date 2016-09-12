@@ -1,5 +1,8 @@
 import { FirebaseAPI, extractUserProperties } from 'shared/utils/firebaseUtils'
 import { push } from 'react-router-redux'
+import reactCookie from 'react-cookie';
+
+import { AUTH_TOKEN } from 'shared/configs/auth';
 
 export const AUTH_INITIALIZE = 'AUTH_INITIALIZE'
 export const AUTH_CREATE_USER = 'AUTH_CREATE_USER'
@@ -25,7 +28,7 @@ export function authInitializedDone() {
 
 export function authLoad(user) {
   return (dispatch) => {
-    dispatch(authLogIn(user.id))
+    dispatch(authLogIn(user.uid))
     dispatch(authLoadUser(user))
   }
 }
@@ -33,7 +36,7 @@ export function authLoad(user) {
 export function authLoadUser(user) {
   return {
     type: AUTH_CREATE_USER, 
-    user: extractUserProperties(user)
+    user: user
   };
 }
 
@@ -55,7 +58,19 @@ export function logIn() {
     FirebaseAPI.signInWithPopup('facebook')
       .then((result) => {
         dispatch(createUser(result.user))
-        dispatch(authLoad(result.user))
+        firebase.database()
+          .ref('/users/' + result.user.uid)
+          .once('value')
+          .then((snapshot) => {
+            dispatch(authLoad(snapshot.val()))
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        FirebaseAPI.getCurrentUserToken()
+          .then(function(idToken) {
+            reactCookie.save(AUTH_TOKEN, idToken);
+          })
       }).catch(function(error) {
         console.log('signin failed', error)
       })
@@ -79,6 +94,7 @@ export function logOut() {
   return (dispatch, getState) => {
     return FirebaseAPI.signOut()
       .then(() => {
+        reactCookie.remove(AUTH_TOKEN);
         dispatch(authLogOut())
         dispatch(push('/'))
       })

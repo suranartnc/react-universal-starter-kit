@@ -37,6 +37,10 @@ export class FirebaseAPI {
     return firebase.auth().currentUser.uid
   }
 
+  static getCurrentUserToken(forceRefresh = true) {
+    return firebase.auth().currentUser.getToken(forceRefresh)
+  }
+
   static initAuth() {
     return new Promise((resolve, reject) => {
       const unsub = firebase.auth().onAuthStateChanged(
