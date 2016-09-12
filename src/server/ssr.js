@@ -8,11 +8,6 @@ import prefetchData from './prefetchData'
 
 import config from '../../src/shared/configs'
 
-import firebase from 'firebase';
-import firebaseConfig from 'shared/configs/firebase'
-
-firebase.initializeApp(firebaseConfig)
-
 const wdsPath = `http://${config.host}:${config.wdsPort}/build/`
 const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets)
 

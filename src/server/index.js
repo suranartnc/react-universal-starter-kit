@@ -8,6 +8,14 @@ import passport from 'passport'
 import passportRouteHandler from 'server/routes/passport'
 import passportGetConfigs from 'server/configs/passport/configurations'
 
+import firebase from 'firebase';
+import firebaseConfig from 'shared/configs/firebase'
+
+firebase.initializeApp({
+  ...firebaseConfig,
+  serviceAccount: "src/server/serviceAccountCredentials.json"
+})
+
 passportGetConfigs(passport)
 
 const app = express();
