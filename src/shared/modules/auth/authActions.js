@@ -91,10 +91,10 @@ export function createUser(user) {
 }
 
 export function logOut() {
+  reactCookie.remove(AUTH_TOKEN);
   return (dispatch, getState) => {
     return FirebaseAPI.signOut()
       .then(() => {
-        reactCookie.remove(AUTH_TOKEN);
         dispatch(authLogOut())
         dispatch(push('/'))
       })

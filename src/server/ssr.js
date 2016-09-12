@@ -50,13 +50,6 @@ function loadFirebaseAuth(token, store) {
         .ref(`/users/${uid}`)
         .once('value')
     })
-    .then((snapshot) => {
-      return store.dispatch(authLoad(snapshot.val()))
-    })
-    .catch((error) => {
-      console.log(error)
-      return false
-    });
 }
 
 function matchRoutes(req, res, store) {
@@ -97,12 +90,16 @@ export default function(req, res) {
 
   if (token !== undefined) {
     loadFirebaseAuth(token, store)
+      .then((snapshot) => {
+        return store.dispatch(authLoad(snapshot.val()))
+      })
       .then(() => {
         matchRoutes(req, res, store)
       })
       .catch((error) => {
-        res.status(500).send(error.message);
-      }) 
+        reactCookie.remove(AUTH_TOKEN);
+        matchRoutes(req, res, store)
+      })
   } else {
     matchRoutes(req, res, store)
   }
