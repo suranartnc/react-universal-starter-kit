@@ -1,3 +1,5 @@
+import config from '../../src/shared/configs'
+
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
@@ -6,12 +8,10 @@ import createStore from 'shared/store/createStore'
 import getRoutes from 'shared/routes'
 import prefetchData from './prefetchData'
 
-import config from '../../src/shared/configs'
-
-import firebase from 'firebase';
-import firebaseConfig from 'shared/configs/firebase'
-
-firebase.initializeApp(firebaseConfig)
+import firebase from 'firebase'
+import reactCookie from 'react-cookie';
+import { AUTH_TOKEN } from 'shared/configs/auth';
+import { authLoad } from 'shared/modules/auth/authActions'
 
 const wdsPath = `http://${config.host}:${config.wdsPort}/build/`
 const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets)
@@ -41,9 +41,19 @@ const renderPage = (reactComponents, initialState) => (`
   </html>
 `)
 
-export default function(req, res) {
+function loadFirebaseAuth(token, store) {
+  return firebase.auth()
+    .verifyIdToken(token)
+    .then((decodedToken) => {
+      const uid = decodedToken.uid;
+      return firebase.database()
+        .ref(`/users/${uid}`)
+        .once('value')
+    })
+}
 
-  const store = createStore()
+function matchRoutes(req, res, store) {
+
   const routes = getRoutes(store)
 
   match({
@@ -69,4 +79,29 @@ export default function(req, res) {
       res.status(404).send('Not found');
     }
   })
+}
+
+export default function(req, res) {
+
+  reactCookie.plugToRequest(req, res);
+
+  const store = createStore()
+  const token = reactCookie.load(AUTH_TOKEN);
+
+  if (token !== undefined) {
+    loadFirebaseAuth(token, store)
+      .then((snapshot) => {
+        return store.dispatch(authLoad(snapshot.val()))
+      })
+      .then(() => {
+        matchRoutes(req, res, store)
+      })
+      .catch((error) => {
+        console.log(error)
+        reactCookie.remove(AUTH_TOKEN);
+        matchRoutes(req, res, store)
+      })
+  } else {
+    matchRoutes(req, res, store)
+  }
 }

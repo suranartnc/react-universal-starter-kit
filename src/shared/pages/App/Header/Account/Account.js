@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import { connect } from 'react-redux'
-import { authInitialized, logIn, logOut } from 'shared/modules/auth/authActions'
+import { logIn, logOut } from 'shared/modules/auth/authActions'
 
 class Account extends Component {
   

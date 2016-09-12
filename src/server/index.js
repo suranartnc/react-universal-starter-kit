@@ -4,6 +4,17 @@ import express from 'express';
 import favicon from 'serve-favicon';
 import ssr from './ssr';
 
+import firebase from 'firebase';
+import firebaseConfig from 'shared/configs/firebase'
+
+firebase.initializeApp({
+  ...firebaseConfig,
+  serviceAccount: "src/server/serviceAccountCredentials.json",
+  databaseAuthVariableOverride: {
+    uid: "server-side-request"
+  }
+})
+
 const app = express();
 app.use(favicon(path.join(process.cwd(), 'static/favicon.ico')));
 app.use(express.static(path.join(process.cwd(), 'static')));
