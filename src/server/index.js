@@ -9,7 +9,10 @@ import firebaseConfig from 'shared/configs/firebase'
 
 firebase.initializeApp({
   ...firebaseConfig,
-  serviceAccount: "src/server/serviceAccountCredentials.json"
+  serviceAccount: "src/server/serviceAccountCredentials.json",
+  databaseAuthVariableOverride: {
+    uid: "server-side-request"
+  }
 })
 
 const app = express();

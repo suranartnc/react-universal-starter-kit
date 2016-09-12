@@ -97,6 +97,7 @@ export default function(req, res) {
         matchRoutes(req, res, store)
       })
       .catch((error) => {
+        console.log(error)
         reactCookie.remove(AUTH_TOKEN);
         matchRoutes(req, res, store)
       })
