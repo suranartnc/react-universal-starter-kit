@@ -12,7 +12,6 @@ import firebase from 'firebase'
 import reactCookie from 'react-cookie';
 import { AUTH_TOKEN } from 'shared/configs/auth';
 import { authLoad } from 'shared/modules/auth/authActions'
-import { extractUserProperties } from 'shared/utils/firebaseUtils'
 
 const wdsPath = `http://${config.host}:${config.wdsPort}/build/`
 const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets)
