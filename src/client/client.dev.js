@@ -7,6 +7,7 @@ import Root from 'shared/Root';
 
 import firebase from 'firebase'
 import firebaseConfig from 'shared/configs/firebase'
+import { FirebaseAPI } from 'shared/utils/firebaseUtils'
 
 firebase.initializeApp(firebaseConfig)
 
@@ -14,22 +15,28 @@ const initialState = window.__INITIAL_STATE__
 const store = createStore(browserHistory, initialState);
 const mountNode = document.getElementById('root');
 
-render(
-  <AppContainer>
-    <Root store={store} />
-  </AppContainer>,
-  mountNode
-);
-
-if (module.hot) {
-  module.hot.accept('shared/Root', () => {
-    const NextRootApp = require('shared/Root').default;
-
+FirebaseAPI.initAuth()
+  .then((user) => {
     render(
       <AppContainer>
-        <NextRootApp store={store} />
+        <Root store={store} />
       </AppContainer>,
       mountNode
     );
-  });
-}
+
+    if (module.hot) {
+      module.hot.accept('shared/Root', () => {
+        const NextRootApp = require('shared/Root').default;
+
+        render(
+          <AppContainer>
+            <NextRootApp store={store} />
+          </AppContainer>,
+          mountNode
+        );
+      });
+    }
+  })
+  .catch((error) => {
+    console.log(error)
+  })

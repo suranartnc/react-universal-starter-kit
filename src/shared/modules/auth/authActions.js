@@ -4,27 +4,9 @@ import reactCookie from 'react-cookie';
 
 import { AUTH_TOKEN } from 'shared/configs/auth';
 
-export const AUTH_INITIALIZE = 'AUTH_INITIALIZE'
 export const AUTH_CREATE_USER = 'AUTH_CREATE_USER'
 export const AUTH_LOGIN = 'AUTH_LOGIN'
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
-
-export function authInitialized(user) {
-  return (dispatch) => {
-    dispatch(authInitializedDone())
-    if (user) {
-      dispatch(authLoad(user))
-    } else {
-      dispatch(authLogOut())
-    }
-  };
-}
-
-export function authInitializedDone() {
-  return {
-    type: AUTH_INITIALIZE
-  }
-}
 
 export function authLoad(user) {
   return (dispatch) => {

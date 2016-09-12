@@ -17,6 +17,7 @@ module.exports = {
       "firebase",
       "normalizr",
       "react",
+      "react-cookie",
       "react-dom",
       "react-helmet",
       "react-redux",
