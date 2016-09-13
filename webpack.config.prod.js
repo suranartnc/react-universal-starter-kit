@@ -36,8 +36,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, "static", "build"),
     publicPath: "/build/",
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js'
+    filename: '[name]-[chunkhash].js',
+    chunkFilename: '[name]-[chunkhash].chunk.js'
   },
 
   module: {
@@ -118,7 +118,7 @@ module.exports = {
       prettyPrint: true
     }),
     new ExtractTextPlugin({ 
-      filename: '[name].[contenthash].css',
+      filename: '[name]-[contenthash].css',
       allChunks: true
     }),
     new webpack.optimize.CommonsChunkPlugin({
