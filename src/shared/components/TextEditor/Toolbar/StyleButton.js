@@ -7,7 +7,7 @@ class StyleButton extends Component {
   }
 
   render() {
-    const className = this.props.active ? 'btn-primary active' : 'btn-default'
+    const className = this.props.isActive ? 'btn-primary active' : 'btn-default'
 
     return (
       <button type="button"
@@ -22,7 +22,7 @@ class StyleButton extends Component {
 StyleButton.propTypes = {
   label: PropTypes.string.isRequired,
   style: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
 }
 

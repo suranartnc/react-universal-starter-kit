@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { Editor, EditorState, RichUtils } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
-import InlineStyleControls from './InlineStyleControls/InlineStyleControls'
-import BlockStyleControls from './BlockStyleControls/BlockStyleControls'
+
+import Toolbar from './Toolbar/Toolbar'
+
 import styles from './TextEditor.scss'
 
 class TextEditor extends Component {
@@ -46,21 +47,11 @@ class TextEditor extends Component {
   }
 
   render() {
-    console.log(styles)
-
     const { editorState } = this.state
 
     return (
       <div>
-        <div className="btn-toolbar" role="toolbar">
-          <InlineStyleControls
-            editorState={editorState}
-            onToggle={this.toggleInlineStyle} />
-
-          <BlockStyleControls
-            editorState={editorState}
-            onToggle={this.toggleBlockType} />
-        </div>
+        <Toolbar editorState={editorState} onChange={this.onChange} />
 
         <div className={styles.editor} onClick={this.onFocus}>
           <Editor ref="editor"
