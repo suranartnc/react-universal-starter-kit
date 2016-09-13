@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
 
@@ -123,7 +124,8 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
       minChunks: Infinity
-    })
+    }),
+    new ProgressBarPlugin()
   ],
 
   postcss: [
