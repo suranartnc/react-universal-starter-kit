@@ -9,6 +9,7 @@ import Root from 'shared/Root';
 import firebase from 'firebase'
 import firebaseConfig from 'shared/configs/firebase'
 import { FirebaseAPI } from 'shared/utils/firebaseUtils'
+import { logOut } from 'shared/modules/auth/authActions'
 
 firebase.initializeApp(firebaseConfig)
 
@@ -20,12 +21,18 @@ const mountNode = document.getElementById('root');
 
 FirebaseAPI.initAuth()
   .then((user) => {
+
+    if (user === null) {
+      store.dispatch(logOut())
+    }
+
     match({ history, routes }, (error, redirectLocation, renderProps) => {
       render(
         <Root {...renderProps} store={store} />,
         mountNode
       );
     })
+    
   })
   .catch((error) => {
     console.log(error)

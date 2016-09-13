@@ -51,7 +51,12 @@ export function logIn() {
           })
         FirebaseAPI.getCurrentUserToken()
           .then(function(idToken) {
-            reactCookie.save(AUTH_TOKEN, idToken);
+            reactCookie.save(AUTH_TOKEN, idToken, {
+              maxAge: 60 * 60, // 1 hour
+              // domain: '',
+              // secure: true,
+              // httpOnly: true
+            });
           })
       }).catch(function(error) {
         console.log('signin failed', error)
