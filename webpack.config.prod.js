@@ -14,6 +14,7 @@ module.exports = {
     vendor: [
       "es6-promise",
       "isomorphic-fetch",
+      "faker",
       "firebase",
       "normalizr",
       "react",
@@ -25,6 +26,7 @@ module.exports = {
       "react-router-redux",
       "react-router-scroll",
       "redux",
+      "redux-form",
       "redux-thunk",
       "reselect"
     ]
