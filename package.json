@@ -7,6 +7,8 @@
     "dev": "npm-run-all --parallel dev-ssr dev-hmr",
     "dev-ssr": "better-npm-run dev",
     "dev-hmr": "webpack-dev-server --config webpack.config.dev.js",
+    "dev-dashboard": "npm-run-all --parallel dev-ssr dev-hmr-dashboard",
+    "dev-hmr-dashboard": "webpack-dashboard -- webpack-dev-server --config webpack.config.dev.js",
     "postinstall": "npm run build",
     "build": "better-npm-run build",
     "start": "npm-run-all --parallel start-ssr",
@@ -103,6 +105,7 @@
     "@kadira/storybook": "^2.11.0",
     "nodemon": "^1.10.0",
     "react-hot-loader": "^3.0.0-beta.2",
+    "webpack-dashboard": "^0.1.8",
     "webpack-dev-server": "^2.1.0-beta.0"
   }
 }
