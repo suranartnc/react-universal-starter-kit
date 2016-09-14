@@ -15,7 +15,6 @@ module.exports = {
     vendor: [
       "es6-promise",
       "isomorphic-fetch",
-      "faker",
       "firebase",
       "normalizr",
       "react",
