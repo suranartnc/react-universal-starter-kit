@@ -5,7 +5,6 @@ import { createNewPost } from 'shared/modules/post/postActions'
 import WritePage from './WritePage'
 
 import _ from 'lodash'
-import faker from 'faker'
 
 class WritePageContainer extends Component {
 
@@ -15,11 +14,8 @@ class WritePageContainer extends Component {
       length: 30
     })
 
-    // mock missing post data
     const now = (new Date).getTime()
     data.excerpt = excerpt
-    data.name = `${faker.name.firstName()} ${faker.name.lastName()}`
-    data.avatar = faker.image.avatar()
     data.tags = data.title.split(' ')
     data.pubDate = now
     data.pubDateInverse = 0 - now

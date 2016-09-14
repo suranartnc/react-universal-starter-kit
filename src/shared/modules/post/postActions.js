@@ -43,11 +43,14 @@ export function getPostById(id) {
 
 export function createNewPost(data) {
 
-  const uid = FirebaseAPI.getCurrentUserID()
-  const newPostKey = FirebaseAPI.createNewKey('posts');
+  const firebaseUser = FirebaseAPI.getCurrentUser()
+  const newPostKey = FirebaseAPI.createNewKey('posts')
+  const uid = firebaseUser.uid
 
   data.id = newPostKey
   data.uid = uid
+  data.name = firebaseUser.displayName
+  data.avatar = firebaseUser.photoURL
 
   const updates = {};
   updates['/posts/' + newPostKey] = data;

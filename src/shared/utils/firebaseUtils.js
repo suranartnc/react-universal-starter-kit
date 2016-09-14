@@ -33,8 +33,8 @@ export class FirebaseAPI {
       .key
   }
 
-  static getCurrentUserID() {
-    return firebase.auth().currentUser.uid
+  static getCurrentUser() {
+    return firebase.auth().currentUser
   }
 
   static getCurrentUserToken(forceRefresh = true) {
