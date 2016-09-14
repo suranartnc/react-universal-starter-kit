@@ -36,16 +36,6 @@ class TextEditor extends Component {
     return false
   }
 
-  toggleInlineStyle = (inlineStyle) => {
-    const newState = RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
-    this.onChange(newState)
-  }
-
-  toggleBlockType = (blockType) => {
-    const newState = RichUtils.toggleBlockType(this.state.editorState, blockType)
-    this.onChange(newState)
-  }
-
   render() {
     const { editorState } = this.state
 
