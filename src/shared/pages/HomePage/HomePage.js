@@ -16,7 +16,7 @@ const HomePage = ({ posts }) => (
 
 HomePage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     tags: PropTypes.array

@@ -1,12 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
+var DashboardPlugin = require('webpack-dashboard/plugin');
 
 var config = require('./src/shared/configs');
 
 module.exports = {
 
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
 
   entry: [
     'react-hot-loader/patch',
@@ -86,7 +87,8 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development'),
         'BROWSER': JSON.stringify(true)
       }
-    })
+    }),
+    new DashboardPlugin()
   ],
 
   postcss: [

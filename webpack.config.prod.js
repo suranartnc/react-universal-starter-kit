@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
 
@@ -14,7 +15,10 @@ module.exports = {
     vendor: [
       "es6-promise",
       "isomorphic-fetch",
+      "firebase",
+      "normalizr",
       "react",
+      "react-cookie",
       "react-dom",
       "react-helmet",
       "react-redux",
@@ -22,6 +26,8 @@ module.exports = {
       "react-router-redux",
       "react-router-scroll",
       "redux",
+      "redux-form",
+      "redux-thunk",
       "reselect"
     ]
   },
@@ -29,8 +35,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, "static", "build"),
     publicPath: "/build/",
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js'
+    filename: '[name]-[chunkhash].js',
+    chunkFilename: '[name]-[chunkhash].chunk.js'
   },
 
   module: {
@@ -111,13 +117,14 @@ module.exports = {
       prettyPrint: true
     }),
     new ExtractTextPlugin({ 
-      filename: '[name].[contenthash].css',
+      filename: '[name]-[contenthash].css',
       allChunks: true
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
       minChunks: Infinity
-    })
+    }),
+    new ProgressBarPlugin()
   ],
 
   postcss: [

@@ -1,42 +1,72 @@
+import { FirebaseAPI } from 'shared/utils/firebaseUtils'
+
 export const POST_GET_LATEST = 'POST_GET_LATEST'
 export const POST_GET_BY_ID = 'POST_GET_BY_ID'
 export const POST_CREATE = 'POST_CREATE'
 
-import { 
+import {
   postSchema,
   postArraySchema
 } from './postSchemas'
 
-export function getPostLatest(limit = 20) {
+export function getPostLatest() {
   return {
     type: POST_GET_LATEST,
-    request: {
-      path: `/posts?_sort=id&_order=DESC&_limit=${limit}`
-    },
-    schema: postArraySchema
-  };
+    database: {
+      method: 'get',
+      options: {
+        path: '/posts/',
+        sortBy: 'pubDateInverse',
+        schema: {
+          entities: 'posts',
+          type: 'list'
+        }
+      } 
+    }
+  }
 }
 
 export function getPostById(id) {
   return {
     type: POST_GET_BY_ID,
-    request: {
-      path: `/posts/${id}`
-    },
-    schema: postSchema
-  };
+    database: {
+      method: 'get',
+      options: {
+        path: `/posts/${id}`,
+        schema: {
+          entities: 'posts'
+        }
+      }
+    }
+  }
 }
 
 export function createNewPost(data) {
+
+  const firebaseUser = FirebaseAPI.getCurrentUser()
+  const newPostKey = FirebaseAPI.createNewKey('posts')
+  const uid = firebaseUser.uid
+
+  data.id = newPostKey
+  data.uid = uid
+  data.name = firebaseUser.displayName
+  data.avatar = firebaseUser.photoURL
+
+  const updates = {};
+  updates['/posts/' + newPostKey] = data;
+  updates['/user-posts/' + uid + '/' + newPostKey] = data;
+
   return {
     type: POST_CREATE,
-    request: {
-      path: '/posts',
+    database: {
+      method: 'update',
       options: {
-        method: 'POST',
-        body: data
+        data,
+        updates,
+        schema: {
+          entities: 'posts'
+        }
       }
-    },
-    schema: postSchema
-  };
+    }
+  }
 }

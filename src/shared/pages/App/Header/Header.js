@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import styles from './Header.scss';
 
-const Header = () => (
+import Account from './Account/Account'
+
+const Header = (props) => (
   <header className={styles['header']}>
     <div className="container">
       <div className={styles['bar']}>
@@ -10,7 +12,7 @@ const Header = () => (
           <Link to="/">React Universal Starter Kit</Link>
         </div>
         <div className={styles['write']}>
-          <Link to="/write">Write a story</Link>
+          <Account />
         </div>
       </div>
       <nav className={styles['nav']}>
