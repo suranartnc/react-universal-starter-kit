@@ -40,15 +40,14 @@ export function logIn() {
     FirebaseAPI.signInWithPopup('facebook')
       .then((result) => {
         dispatch(createUser(result.user))
-        firebase.database()
-          .ref('/users/' + result.user.uid)
-          .once('value')
+        FirebaseAPI.get({ path: `/users/${result.user.uid}` })
           .then((snapshot) => {
             dispatch(authLoad(snapshot.val()))
           })
           .catch((error) => {
             console.log(error)
           })
+
         FirebaseAPI.getCurrentUserToken()
           .then(function(idToken) {
             reactCookie.save(AUTH_TOKEN, idToken, {
