@@ -1,14 +1,23 @@
 import React, { Component, PropTypes } from 'react'
-import { Editor, EditorState, RichUtils } from 'draft-js'
+import { Editor, EditorState, RichUtils, CompositeDecorator } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 
 import Toolbar from './Toolbar/Toolbar'
+import LinkEntity from './Link/LinkEntity'
+import LinkStrategy from './Link/LinkStrategy'
 
 import styles from './TextEditor.scss'
 
+const decorator = new CompositeDecorator([
+  {
+    strategy: LinkStrategy,
+    component: LinkEntity,
+  }
+])
+
 class TextEditor extends Component {
   state = {
-    editorState: EditorState.createEmpty()
+    editorState: EditorState.createEmpty(decorator)
   }
 
   onChange = (editorState) => {
