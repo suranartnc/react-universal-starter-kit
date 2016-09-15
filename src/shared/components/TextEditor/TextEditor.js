@@ -3,16 +3,13 @@ import { Editor, EditorState, RichUtils, CompositeDecorator } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 
 import Toolbar from './Toolbar/Toolbar'
-import LinkEntity from './Link/LinkEntity'
-import LinkStrategy from './Link/LinkStrategy'
+
+import LinkDecorator from './decorators/LinkDecorator'
 
 import styles from './TextEditor.scss'
 
 const decorator = new CompositeDecorator([
-  {
-    strategy: LinkStrategy,
-    component: LinkEntity,
-  }
+  LinkDecorator
 ])
 
 class TextEditor extends Component {
