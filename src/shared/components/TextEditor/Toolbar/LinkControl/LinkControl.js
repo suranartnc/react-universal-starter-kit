@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { RichUtils, Entity } from 'draft-js'
-import { LinkEntityType } from '../../decorators/LinkDecorator'
+import { LinkEntityType } from 'shared/components/TextEditor/decorators/LinkDecorator'
+import {
+  getEntityKeyAtCurrentSelection,
+  getEntitySelectionState,
+} from 'shared/components/TextEditor/helpers'
 
 import styles from './LinkControl.scss'
 
@@ -14,23 +18,49 @@ class LinkControl extends Component {
     const selection = this.props.editorState.getSelection()
     const disabled = selection.isCollapsed()
 
+    let onClick = this.promptForLink
+    let className = 'btn btn-default'
+    if (this.isAlreadyALink()) {
+      onClick = this.removeLink
+      className += ' active'
+    }
+
+
     return (
       <button type="button"
-        className="btn btn-default"
+        className={className}
         disabled={disabled}
-        onClick={this.toggleLink}
+        onClick={onClick}
       >
         Link
       </button>
     )
   }
 
-  toggleLink = () => {
+  isAlreadyALink() {
+    const entityKey = getEntityKeyAtCurrentSelection(this.props.editorState)
+    if (entityKey === null) {
+      return false
+    }
+
+    return Entity.get(entityKey).getType() === LinkEntityType
+  }
+
+  promptForLink = () => {
     this.setState({
       showLinkInput: true
     }, () => {
       setTimeout(() => this.refs.url.focus(), 0) // this trick from draft-js link example
     })
+  }
+
+  removeLink = () => {
+    const { editorState, onChange } = this.props
+
+    const entityKey = getEntityKeyAtCurrentSelection(editorState)
+    const selectionState = getEntitySelectionState(editorState, entityKey)
+
+    onChange(RichUtils.toggleLink(editorState, selectionState, null))
   }
 
   renderLinkInput() {
