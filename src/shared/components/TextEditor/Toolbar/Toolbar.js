@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { RichUtils } from 'draft-js'
 import InlineStyleButtons from './InlineStyleButtons'
 import BlockTypeButtons from './BlockTypeButtons'
-import LinkButton from './LinkButton/LinkButton'
+import LinkControl from './LinkControl/LinkControl'
 
 const BLOCK_TYPE_BUTTONS = [
   {label: 'H1', style: 'header-one'},
@@ -16,7 +16,7 @@ class Toolbar extends Component {
       <div className="btn-toolbar" role="toolbar">
         <InlineStyleButtons {...this.props} />
         <BlockTypeButtons {...this.props} />
-        <LinkButton {...this.props} />
+        <LinkControl {...this.props} />
       </div>
     )
   }

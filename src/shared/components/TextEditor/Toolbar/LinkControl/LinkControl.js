@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { RichUtils, Entity } from 'draft-js'
 import { LinkEntityType } from '../../decorators/LinkDecorator'
 
-import styles from './LinkButton.scss'
+import styles from './LinkControl.scss'
 
-class LinkButton extends Component {
+class LinkControl extends Component {
   state = {
     showLinkInput: false,
     linkValue: '',
@@ -84,9 +84,9 @@ class LinkButton extends Component {
   }
 }
 
-LinkButton.propTypes = {
+LinkControl.propTypes = {
   editorState: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 }
 
-export default LinkButton
+export default LinkControl
