@@ -22,7 +22,7 @@ class LinkControl extends Component {
     let className = 'btn btn-default'
     if (this.isAlreadyALink()) {
       onClick = this.removeLink
-      className += ' active'
+      className = 'btn btn-primary active'
     }
 
 
