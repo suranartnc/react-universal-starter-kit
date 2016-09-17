@@ -68,13 +68,28 @@ class LinkControl extends Component {
       return null
     }
 
-    return <input type="url"
-      ref="url"
-      value={this.state.linkValue}
-      onChange={this.onLinkChange}
-      onKeyDown={this.onLinkInputKeyDown}
-      className={`form-control ${styles.input}`}
-      placeholder="Paste or type a link" />
+    return (
+      <div className={`input-group ${styles.input}`}>
+        <input type="url"
+          ref="url"
+          value={this.state.linkValue}
+          onChange={this.onLinkChange}
+          onKeyDown={this.onLinkInputKeyDown}
+          className={`form-control`}
+          placeholder="Paste or type a link" />
+
+        <span className="input-group-btn">
+          <button type="button"
+            className="btn btn-default"
+            onClick={this.closeLinkInput}
+          >
+            <span className="glyphicon glyphicon-remove">
+              <span className="sr-only">Close</span>
+            </span>
+          </button>
+        </span>
+      </div>
+    )
   }
 
   onLinkChange = (e) => {
@@ -89,6 +104,13 @@ class LinkControl extends Component {
     }
   }
 
+  closeLinkInput = () => {
+    this.setState({
+      showLinkInput: false,
+      linkValue: '',
+    })
+  }
+
   submitLinkInput = (e) => {
     e.preventDefault()
 
@@ -98,10 +120,7 @@ class LinkControl extends Component {
 
     this.props.onChange(RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey))
 
-    this.setState({
-      showLinkInput: false,
-      linkValue: '',
-    })
+    this.closeLinkInput()
   }
 
   render() {
