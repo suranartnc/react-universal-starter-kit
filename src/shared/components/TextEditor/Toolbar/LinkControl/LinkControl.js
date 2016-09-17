@@ -16,15 +16,15 @@ class LinkControl extends Component {
 
   renderLinkButton() {
     const selection = this.props.editorState.getSelection()
-    const disabled = selection.isCollapsed()
+    let disabled = selection.isCollapsed()
 
     let onClick = this.promptForLink
     let className = 'btn btn-default'
     if (this.isAlreadyALink()) {
+      disabled = false
       onClick = this.removeLink
       className = 'btn btn-primary active'
     }
-
 
     return (
       <button type="button"
