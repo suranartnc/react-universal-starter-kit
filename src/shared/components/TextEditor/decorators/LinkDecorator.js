@@ -26,7 +26,7 @@ export const LinkEntity = (props) => {
 
 export const LinkStrategy = (contentBlock, callback) => {
   filterByEntityType(contentBlock, callback)
-  filterByPlainText(contentBlock, callback)
+  // filterByPlainText(contentBlock, callback)
 }
 
 function filterByEntityType(contentBlock, callback) {

@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import { Editor, EditorState, RichUtils, CompositeDecorator } from 'draft-js'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { Editor, EditorState, RichUtils, CompositeDecorator, convertToRaw } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
+import DefaultDraftBlockRenderMap from 'draft-js/lib/DefaultDraftBlockRenderMap'
 
 import Toolbar from './Toolbar/Toolbar'
+import HtmlRenderer from './HtmlRenderer'
 
 import LinkDecorator from './decorators/LinkDecorator'
 
@@ -14,16 +17,35 @@ const decorator = new CompositeDecorator([
 
 class TextEditor extends Component {
   state = {
-    editorState: EditorState.createEmpty(decorator)
+    editorState: EditorState.createEmpty(decorator),
+    html: '',
   }
 
   onChange = (editorState) => {
+    const result = this.convertEditorState(editorState)
+
     this.setState({
-      editorState
+      editorState,
+      html: result.html,
     })
+
 
     const html = stateToHTML(editorState.getCurrentContent())
     this.props.onChange(html)
+  }
+
+  convertEditorState = (editorState) => {
+    const contentState = editorState.getCurrentContent()
+
+    const rawState = convertToRaw(contentState)
+
+    return {
+      raw: rawState,
+      excerpt: contentState.getPlainText(),
+      html: renderToStaticMarkup(<HtmlRenderer
+        editorState={editorState}
+        blockRenderMap={DefaultDraftBlockRenderMap} />),
+    }
   }
 
   onFocus = (e) => {
@@ -56,6 +78,8 @@ class TextEditor extends Component {
             onFocus={this.onFocus}
             onBlur={this.props.onBlur}
             handleKeyCommand={this.handleKeyCommand} />
+        </div>
+        <div dangerouslySetInnerHTML={{__html: this.state.html}}>
         </div>
       </div>
     )
