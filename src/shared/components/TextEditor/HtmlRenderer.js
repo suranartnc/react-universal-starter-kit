@@ -44,10 +44,17 @@ class HtmlRenderer extends Component {
       const decoratorProps = decorator.getPropsForKey(decoratorKey)
       const decoratorOffsetKey = DraftOffsetKey.encode(key, decoratorKey, 0)
 
+      const decoratedText = text.slice(
+        leavesForLeafSet.first().get('start'),
+        leavesForLeafSet.last().get('end')
+      )
+
       return (
         <DecoratorComponent
           key={decoratorOffsetKey}
+          offsetKey={decoratorOffsetKey}
           entityKey={block.getEntityAt(leafSet.get('start'))}
+          decoratedText={decoratedText}
           {...decoratorProps}
         >
           {leaves}
