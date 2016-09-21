@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { Editor, EditorState, RichUtils, CompositeDecorator, convertToRaw } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 import DefaultDraftBlockRenderMap from 'draft-js/lib/DefaultDraftBlockRenderMap'
+import DefaultDraftInlineStyle from 'draft-js/lib/DefaultDraftInlineStyle'
 
 import Toolbar from './Toolbar/Toolbar'
 import HtmlRenderer from './HtmlRenderer'
@@ -44,7 +45,10 @@ class TextEditor extends Component {
       excerpt: contentState.getPlainText(),
       html: renderToStaticMarkup(<HtmlRenderer
         editorState={editorState}
-        blockRenderMap={DefaultDraftBlockRenderMap} />),
+        blockRenderMap={DefaultDraftBlockRenderMap}
+        customStyleMap={
+          {...DefaultDraftInlineStyle}
+        } />),
     }
   }
 
