@@ -20,6 +20,14 @@ class TextEditor extends Component {
     const { label, onChange } = this.props
 
     this.editor = new MediumEditor(dom, {
+      toolbar: {
+        buttons: [
+          'bold', 'italic', 'underline', 'strikethrough',
+          'anchor',
+          'orderedlist', 'unorderedlist',
+          'h1', 'h2',
+        ],
+      },
       placeholder: {
         text: label,
         hideOnClick: false,
