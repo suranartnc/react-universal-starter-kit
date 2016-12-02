@@ -51,9 +51,10 @@ module.exports = {
           },
           {
             loader: 'sass-loader',
-            query: {
+            options: {
               outputStyle: 'expanded',
-              sourceMap: true
+              sourceMap: true,
+              includePaths: [path.join(__dirname, "src/shared/theme/styles")]
             }
           },
           'postcss-loader'
@@ -72,7 +73,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.json', '.js', '.jsx'],
+    extensions: ['.json', '.js'],
     modules: [
       path.join(__dirname, 'src'),
       path.join(__dirname, 'node_modules')
@@ -90,14 +91,6 @@ module.exports = {
     }),
     new DashboardPlugin()
   ],
-
-  postcss: [
-    autoprefixer({ browsers: ['last 2 versions', 'IE > 10'] })
-  ],
-
-  sassLoader: {
-    includePaths: [path.join(__dirname, "src/shared/theme/styles")]
-  },
 
   devServer: {
     port: config.wdsPort,
