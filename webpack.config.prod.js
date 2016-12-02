@@ -69,9 +69,26 @@ module.exports = {
       }, {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract({ 
+        loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: 'css?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]&minimize!postcss!sass'
+          loader: [
+            {
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+                minimize: true,
+              },
+            },
+            'postcss-loader',
+            {
+              loader: 'sass-loader',
+              query: {
+                includePaths: [path.join(__dirname, "src/shared/theme/styles")],
+              },
+            },
+          ],
         })
       }, {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -90,7 +107,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.json', '.js', '.jsx'],
+    extensions: ['.json', '.js'],
     modules: [
       path.join(__dirname, 'src'),
       path.join(__dirname, 'node_modules')
@@ -105,7 +122,6 @@ module.exports = {
       }
     }),
     new webpack.optimize.OccurrenceOrderPlugin(true),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
@@ -120,18 +136,19 @@ module.exports = {
       filename: '[name]-[contenthash].css',
       allChunks: true
     }),
+    new webpack.LoaderOptionsPlugin({
+      test: /\.scss$/,
+      options: {
+        context: __dirname,
+        postcss: [
+          autoprefixer({ browsers: ['last 2 versions', 'IE > 10'] }),
+        ],
+      },
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
       minChunks: Infinity
     }),
     new ProgressBarPlugin()
-  ],
-
-  postcss: [
-    autoprefixer({ browsers: ['last 2 versions', 'IE > 10'] })
-  ],
-
-  sassLoader: {
-    includePaths: [path.join(__dirname, "src/shared/theme/styles")]
-  }
+  ]
 };
